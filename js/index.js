@@ -3,7 +3,7 @@ class Game {
         this.SetupCanvas();
     }
 
-    SetupCanvas() {
+    setupCanvas() {
         this.canvas = document.getElementById("gameCanvas");
         this.canvas.width = this.GetWindowWidth();
         this.canvas.height = this.GetWindowHeight();
@@ -11,16 +11,16 @@ class Game {
         this.ClearScreen();
     }
 
-    ClearScreen() {
+    clearScreen() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = "#000000";
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     };
 
-    GetWindowWidth() {
+    getWindowWidth() {
         return window.innerWidth - 25;
     };
-    GetWindowHeight() {
+    getWindowHeight() {
         return window.innerHeight - 25;
     };
 
