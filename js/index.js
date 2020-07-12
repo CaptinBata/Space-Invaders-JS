@@ -1,14 +1,14 @@
 class Game {
     constructor() {
-        this.SetupCanvas();
+        this.setupCanvas();
     }
 
     setupCanvas() {
         this.canvas = document.getElementById("gameCanvas");
-        this.canvas.width = this.GetWindowWidth();
-        this.canvas.height = this.GetWindowHeight();
+        this.canvas.width = this.getWindowWidth();
+        this.canvas.height = this.getWindowHeight();
         this.context = this.canvas.getContext("2d");
-        this.ClearScreen();
+        this.clearScreen();
     }
 
     clearScreen() {
@@ -20,12 +20,42 @@ class Game {
     getWindowWidth() {
         return window.innerWidth - 25;
     };
+
     getWindowHeight() {
         return window.innerHeight - 25;
     };
 
-    main() {
+    setupGame() {
+        this.player = new Player(this.getWindowWidth() / 2, this.getWindowHeight() - 30)
+        this.shields = [];
+        this.seperation = this.getWindowWidth() / 4;
 
+        for (let i = 0; i < 4; i++) {
+            this.shields.push(new Shield(150 + (i * this.seperation), this.getWindowHeight() - 200))
+        }
+    }
+
+    gameLoop() {
+        this.update();
+        this.draw();
+        window.requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    update() {
+
+    }
+
+    draw() {
+        this.clearScreen();
+        this.player.draw(this.context);
+        this.shields.forEach(shield => {
+            shield.draw(this.context)
+        })
+    }
+
+    main() {
+        this.setupGame();
+        this.gameLoop();
     }
 }
 
