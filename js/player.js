@@ -1,6 +1,7 @@
 class Player extends GameObject {
     constructor(x, y) {
-        super(x, y, [
+        super(x, y)
+        this.drawPoints = [
             new Vector(2.5, 0),
             new Vector(30, 0),
             new Vector(30, -30),
@@ -11,6 +12,6 @@ class Player extends GameObject {
             new Vector(-30, -30),
             new Vector(-30, 0),
             new Vector(-2.5, 0),
-        ])
+        ]
     }
 }

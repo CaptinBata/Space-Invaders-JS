@@ -42,7 +42,9 @@ class Game {
     }
 
     update() {
-
+        this.shields.forEach(shield => {
+            shield.update();
+        });
     }
 
     draw() {

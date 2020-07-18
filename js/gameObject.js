@@ -3,8 +3,7 @@ class GameObject {
     position = null;
     fillColour = "#ffffff"
 
-    constructor(x, y, drawPoints) {
-        this.drawPoints = drawPoints;
+    constructor(x, y) {
         this.position = new Vector(x, y);
     }
 
@@ -18,9 +17,25 @@ class GameObject {
         });
 
         context.closePath();
-        context.strokeStyle = "#ffffff";
-        context.stroke();
-        context.fillStyle = this.fillColour;
+        this.setDrawModes(context, "#ffffff", this.fillColour);
+    }
+
+    drawByPixel(context) {
+        context.beginPath();
+        this.drawPoints.forEach(drawPoint => {
+            context.rect(this.position.x + drawPoint.x, this.position.y + drawPoint.y, 1, 1);
+        });
+        context.closePath();
+        this.setDrawModes(context, "", this.fillColour);
+    }
+
+    setDrawModes(context, strokeStyle, fillStyle) {
+        if (strokeStyle != "") {
+            context.strokeStyle = strokeStyle
+            context.stroke();
+        }
+
+        context.fillStyle = fillStyle
         context.fill();
     }
 }
