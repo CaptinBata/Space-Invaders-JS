@@ -34,8 +34,9 @@ class GameObject {
             context.strokeStyle = strokeStyle
             context.stroke();
         }
-
-        context.fillStyle = fillStyle
-        context.fill();
+        if (fillStyle != "") {
+            context.fillStyle = fillStyle
+            context.fill();
+        }
     }
 }

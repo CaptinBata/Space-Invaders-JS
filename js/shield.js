@@ -24,7 +24,7 @@ class Shield extends GameObject {
 
     update() {
         let random = Utilities.getRandomInt(0, this.drawPoints.length)
-        this.drawPoints.splice(random, 1); //remove the element at index random, and on that item
+        this.drawPoints.splice(random, 1); //remove the element at index random, and only that item
     }
 
     draw(context) {
