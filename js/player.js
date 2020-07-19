@@ -20,11 +20,11 @@ class Player extends GameObject {
         keys.forEach(key => {
             switch (key) {
                 case "a":
-                    this.position.x -= 15;
+                    this.position.x -= 30;
                     keys.splice(keys.indexOf(key), 1); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case "d":
-                    this.position.x += 15;
+                    this.position.x += 30;
                     keys.splice(keys.indexOf(key), 1); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case " ":

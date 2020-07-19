@@ -13,10 +13,10 @@ class Bullet extends GameObject {
 
         if (this.alien) {
             this.fillColour = "#8b1515"; //red
-            this.movementSpeed = 20;
+            this.movementSpeed = 15;
         } else {
             this.fillColour = "#298a51"; //green
-            this.movementSpeed = -20;
+            this.movementSpeed = -15;
         }
     }
 
