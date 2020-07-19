@@ -8,6 +8,10 @@ class GameObject {
     }
 
     draw(context) {
+        this.drawByLine(context);
+    }
+
+    drawByLine(context) {
         context.beginPath();
         context.moveTo(this.position.x + this.drawPoints[0].x, this.position.y + this.drawPoints[0].y);
         this.drawPoints.forEach(point => {

@@ -1,6 +1,8 @@
 class Game {
+    keys = [];
     constructor() {
         this.setupCanvas();
+        this.setupEvents();
     }
 
     setupCanvas() {
@@ -9,6 +11,15 @@ class Game {
         this.canvas.height = this.getWindowHeight();
         this.context = this.canvas.getContext("2d");
         this.clearScreen();
+    }
+
+    setupEvents() {
+        window.addEventListener("keydown", (e) => {
+            this.keys.push(e.key);
+        })
+        window.addEventListener("resize", () => {
+            this.setupCanvas();
+        })
     }
 
     clearScreen() {
@@ -42,9 +53,13 @@ class Game {
     }
 
     update() {
+        this.player.update(this.keys);
         this.shields.forEach(shield => {
-            shield.update();
+            this.player.bullets.forEach(bullet => {
+                shield.update(bullet);
+            })
         });
+        this.keys = []; //clear the array for the next frame
     }
 
     draw() {
