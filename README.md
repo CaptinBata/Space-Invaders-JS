@@ -1,2 +1,2 @@
 # README
-Game made using JavaScript
+Space Invaders game made using JavaScript
