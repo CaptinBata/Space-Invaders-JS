@@ -2,9 +2,37 @@ class GameObject {
     drawPoints = [];
     position = null;
     fillColour = "#ffffff"
+    minMax = {};
 
     constructor(x, y) {
         this.position = new Vector(x, y);
+    }
+
+    setDrawPoints(points) {
+        this.drawPoints = points;
+        this.getObjectBounds();
+    }
+
+    getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection
+        min = new Vector(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+        max = new vector(Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER);
+
+        this.drawPoints.forEach(point => {
+            if (point.x < min.x)
+                min = new Vector(point.x, min.y)
+            if (point.y < min.y)
+                min = new Vector(min.x, point.y)
+
+            if (point.x > max.x)
+                min = new Vector(point.x, max.y)
+            if (point.y > max.y)
+                min = new Vector(max.x, point.y)
+        });
+
+        this.minMax = {
+            min: min,
+            max: max
+        }
     }
 
     draw(context) {

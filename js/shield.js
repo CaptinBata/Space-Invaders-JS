@@ -1,7 +1,7 @@
 class Shield extends GameObject {
     constructor(x, y) {
         super(x, y)
-        this.drawPoints = this.getShape();
+        this.setDrawPoints(this.getShape());
         this.fillColour = "#298a51" //green
     }
 

@@ -3,12 +3,12 @@ class Bullet extends GameObject {
 
     constructor(x, y, alien) {
         super(x, y)
-        this.drawPoints = [
+        this.setDrawPoints([
             new Vector(-2.5, -15),
             new Vector(2.5, -15),
             new Vector(2.5, 15),
             new Vector(-2.5, 15),
-        ]
+        ])
         this.alien = alien;
 
         if (this.alien) {
