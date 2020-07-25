@@ -50,8 +50,29 @@ class Shield extends GameObject {
     }
 
     checkOverlappingPixels(object, pixels) {
-        console.log("It Ran!");
-        console.log(pixels);
+        pixels.forEach(pixel => {
+            if (this.isPointOverlapping(new Vector(object.getMinMax().min.x, object.getMinMax().min.y),
+                new Vector(object.getMinMax().max.x, object.getMinMax().min.y),
+                new Vector(object.getMinMax().max.x, object.getMinMax().max.y),
+                new Vector(object.getMinMax().min.x, object.getMinMax().max.y),
+                pixel
+            )) {
+                this.drawPoints.splice(this.drawPoints.indexOf(pixel), 1);
+                object.toDelete = true;
+            }
+
+        });
+    }
+
+    triangleArea(a, b, c) {
+        return (c.x * b.y - b.x * c.y) - (c.x * a.y - a.x * c.y) + (b.x * a.y - a.x * b.y);
+    }
+
+    isPointOverlapping(a, b, c, d, p) {
+        if (this.triangleArea(a, b, p) > 0 || this.triangleArea(b, c, p) > 0
+            || this.triangleArea(c, d, p) > 0 || this.triangleArea(d, a, p) > 0)
+            return false;
+        return true;
     }
 
     draw(context) {

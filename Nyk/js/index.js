@@ -59,6 +59,11 @@ class Game {
                 shield.update(bullet);
             })
         });
+
+        this.player.bullets.forEach(bullet => {
+            if (bullet.toDelete)
+                this.player.bullets.splice(this.player.bullets.indexOf(bullet), 1);
+        })
         this.keys = []; //clear the array for the next frame
     }
 
