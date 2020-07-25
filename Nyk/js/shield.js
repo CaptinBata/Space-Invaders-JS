@@ -28,17 +28,17 @@ class Shield extends GameObject {
         if (collisions.Left && collisions.Right && collisions.Top && collisions.Bottom)
             this.checkOverlappingPixels(bullet, this.drawPoints);
         else if (collisions.Left && collisions.Top && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x > bullet.getMinMax().max.x; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x > bullet.getMinMax().max.x))
         else if (collisions.Right && collisions.Top && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x < bullet.getMinMax().min.x; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x < bullet.getMinMax().min.x))
         else if (collisions.Left && collisions.Top)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x > bullet.getMinMax().max.x && point.y > bullet.getMinMax().min.y; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x > bullet.getMinMax().max.x && point.y > bullet.getMinMax().min.y))
         else if (collisions.Left && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x > bullet.getMinMax().max.x && point.y < bullet.getMinMax().max.y; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x > bullet.getMinMax().max.x && point.y < bullet.getMinMax().max.y))
         else if (collisions.Right && collisions.Top)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x < bullet.getMinMax().min.x && point.y > bullet.getMinMax().min.y; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x < bullet.getMinMax().min.x && point.y > bullet.getMinMax().min.y))
         else if (collisions.Right && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => { point.x < bullet.getMinMax().min.x && point.y < bullet.getMinMax().max.y; }))
+            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => point.x < bullet.getMinMax().min.x && point.y < bullet.getMinMax().max.y))
     }
 
     update(bullet) {
