@@ -18,8 +18,7 @@ class GameObject {
         return this.minMax;
     }
 
-
-    detectCollision(other) {
+    detectAABBCollision(other) {
         let collisions = {
             Left: false, Right: false, Top: false, Bottom: false
         }
@@ -38,7 +37,13 @@ class GameObject {
             collisions.Top = true;
 
         return collisions;
+    }
 
+    detectPixelCollision(pixel) {
+        if (pixel.x > this.position.x + this.minMax.min.x && pixel.x < this.position.x + this.minMax.max.x)
+            if (pixel.y > this.position.y + this.minMax.min.y && pixel.y < this.position.y + this.minMax.max.y)
+                return true;
+        return false;
     }
 
     getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection
