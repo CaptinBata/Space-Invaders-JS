@@ -3,6 +3,7 @@ class GameObject {
     position = null;
     fillColour = "#ffffff"
     minMax = {};
+    toDelete = false;
 
     constructor(x, y) {
         this.position = new Vector(x, y);
@@ -13,9 +14,36 @@ class GameObject {
         this.getObjectBounds();
     }
 
+    getMinMax() {
+        return this.minMax;
+    }
+
+
+    detectCollision(other) {
+        let collisions = {
+            Left: false, Right: false, Top: false, Bottom: false
+        }
+
+        if (other.position.x + other.getMinMax().min.x > this.position.x + this.minMax.min.x
+            && other.position.x + other.getMinMax().min.x < this.position.x + this.minMax.min.x)
+            collisions.Right = true;
+        if (other.position.x + other.getMinMax().max.x > this.position.x + this.minMax.min.x
+            && other.position.x + other.getMinMax().max.x < this.position.x + this.minMax.max.x)
+            collisions.Left = true;
+        if (other.position.y + other.getMinMax().max.y > this.position.y + this.minMax.min.y
+            && other.position.y + other.getMinMax().max.y < this.position.y + this.minMax.max.y)
+            collisions.Bottom = true;
+        if (other.position.y + other.getMinMax().max.y > this.position.y + this.minMax.min.y
+            && other.position.y + other.getMinMax().max.y < this.position.y + this.minMax.max.y)
+            collisions.Top = true;
+
+        return collisions;
+
+    }
+
     getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection
-        min = new Vector(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
-        max = new vector(Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER);
+        let min = new Vector(1000000, 1000000);
+        let max = new Vector(-1000000, -1000000);
 
         this.drawPoints.forEach(point => {
             if (point.x < min.x)
@@ -24,9 +52,9 @@ class GameObject {
                 min = new Vector(min.x, point.y)
 
             if (point.x > max.x)
-                min = new Vector(point.x, max.y)
+                max = new Vector(point.x, max.y)
             if (point.y > max.y)
-                min = new Vector(max.x, point.y)
+                max = new Vector(max.x, point.y)
         });
 
         this.minMax = {

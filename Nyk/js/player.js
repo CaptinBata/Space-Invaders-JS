@@ -35,7 +35,7 @@ class Player extends GameObject {
         });
         this.bullets.forEach(bullet => {
             bullet.update();
-            if (bullet.position.y < 0 || bullet.position.y > window.innerHeight - 25) //if below or above the window
+            if (bullet.toDelete)
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
         })
     }

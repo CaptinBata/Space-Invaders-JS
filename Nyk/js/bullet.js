@@ -22,5 +22,7 @@ class Bullet extends GameObject {
 
     update() {
         this.position.y += this.movementSpeed;
+        if (this.position.y < 0 || this.position.y > window.innerHeight - 25) //if below or above the window
+            this.toDelete = true;
     }
 }
