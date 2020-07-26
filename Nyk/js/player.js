@@ -17,6 +17,19 @@ class Player extends GameObject {
 
     }
 
+    getBullets() {
+        return this.bullets;
+    }
+
+    checkDelete() {
+        this.bullets.forEach(bullet => {
+            if (bullet.toDelete)
+                this.bullets.splice(this.bullets.indexOf(bullet), 1);
+        });
+
+        //Add in collision of alien bullets here
+    }
+
     update(keys) {
         keys.forEach(key => {
             switch (key) {

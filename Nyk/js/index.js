@@ -52,18 +52,27 @@ class Game {
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
 
+    checkDelete() {
+        this.shields.forEach(shield => {
+            shield.checkDelete();
+            if (shield.toDelete)
+                this.shields.splice(this.shields.indexOf(shield), 1);
+        });
+
+        this.player.checkDelete();
+        if (this.player.toDelete)
+            delete this.player;
+    }
+
     update() {
         this.player.update(this.keys);
         this.shields.forEach(shield => {
-            this.player.bullets.forEach(bullet => {
+            this.player.getBullets().forEach(bullet => {
                 shield.update(bullet);
             })
         });
 
-        this.player.bullets.forEach(bullet => {
-            if (bullet.toDelete)
-                this.player.bullets.splice(this.player.bullets.indexOf(bullet), 1);
-        })
+        this.checkDelete();
         this.keys = []; //clear the array for the next frame
     }
 

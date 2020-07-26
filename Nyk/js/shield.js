@@ -34,13 +34,20 @@ class Shield extends GameObject {
 
             overlappingPixels.forEach(pixel => {
                 this.drawPoints.splice(this.drawPoints.indexOf(pixel), 1);
+                bullet.toDelete = true;
             })
         }
 
     }
 
+    checkDelete() {
+        if (this.drawPoints.length == 0)
+            this.toDelete = true;
+    }
+
     update(bullet) {
         this.checkCollisions(bullet);
+
     }
 
     draw(context) {
