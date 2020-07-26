@@ -20,30 +20,25 @@ class GameObject {
 
     detectAABBCollision(other) {
         let collisions = {
-            Left: false, Right: false, Top: false, Bottom: false
+            minX: false, maxX: false, minY: false, maxY: false
         }
 
         if (other.position.x + other.getMinMax().min.x > this.position.x + this.minMax.min.x
-            && other.position.x + other.getMinMax().min.x < this.position.x + this.minMax.min.x)
-            collisions.Right = true;
+            && other.position.x + other.getMinMax().min.x < this.position.x + this.minMax.max.x)
+            collisions.minX = true;
         if (other.position.x + other.getMinMax().max.x > this.position.x + this.minMax.min.x
             && other.position.x + other.getMinMax().max.x < this.position.x + this.minMax.max.x)
-            collisions.Left = true;
+            collisions.maxX = true;
+
+
+        if (other.position.y + other.getMinMax().min.y > this.position.y + this.minMax.min.y
+            && other.position.y + other.getMinMax().min.y < this.position.y + this.minMax.max.y)
+            collisions.minY = true;
         if (other.position.y + other.getMinMax().max.y > this.position.y + this.minMax.min.y
             && other.position.y + other.getMinMax().max.y < this.position.y + this.minMax.max.y)
-            collisions.Bottom = true;
-        if (other.position.y + other.getMinMax().max.y > this.position.y + this.minMax.min.y
-            && other.position.y + other.getMinMax().max.y < this.position.y + this.minMax.max.y)
-            collisions.Top = true;
+            collisions.maxY = true;
 
-        return collisions;
-    }
-
-    detectPixelCollision(pixel) {
-        if (pixel.x > this.position.x + this.minMax.min.x && pixel.x < this.position.x + this.minMax.max.x)
-            if (pixel.y > this.position.y + this.minMax.min.y && pixel.y < this.position.y + this.minMax.max.y)
-                return true;
-        return false;
+        return (collisions.minX || collisions.maxX) && (collisions.minY || collisions.maxY); //If horizontal point and vertical point overlapping, doesn't matter which ones or if multiple of either
     }
 
     getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection

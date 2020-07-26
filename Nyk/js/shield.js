@@ -23,46 +23,24 @@ class Shield extends GameObject {
     }
 
     checkCollisions(bullet) {
-        let collisions = this.detectAABBCollision(bullet)
+        if (this.detectAABBCollision(bullet)) {
+            let overlappingPixels = this.drawPoints.filter(pixel =>
+                this.position.x + pixel.x > bullet.position.x + bullet.getMinMax().min.x
+                && this.position.x + pixel.x < bullet.position.x + bullet.getMinMax().max.x
+                && this.position.y + pixel.y > bullet.position.y + bullet.getMinMax().min.y
+                && this.position.y + pixel.y < bullet.position.y + bullet.getMinMax().max.y);
 
-        if (collisions.Left && collisions.Right && collisions.Top && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints);
-        else if (collisions.Left && collisions.Top && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x < bullet.position.x + bullet.getMinMax().max.x))
-        else if (collisions.Right && collisions.Top && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x > bullet.position.x + bullet.getMinMax().min.x))
-        else if (collisions.Left && collisions.Top)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x < bullet.position.x + bullet.getMinMax().max.x
-                && this.position.y + point.y < bullet.position.y + bullet.getMinMax().min.y))
-        else if (collisions.Left && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x < bullet.position.x + bullet.getMinMax().max.x
-                && this.position.y + point.y > bullet.position.y + bullet.getMinMax().max.y))
-        else if (collisions.Right && collisions.Top)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x > bullet.position.x + bullet.getMinMax().min.x
-                && this.position.y + point.y < bullet.position.y + bullet.getMinMax().min.y))
-        else if (collisions.Right && collisions.Bottom)
-            this.checkOverlappingPixels(bullet, this.drawPoints.filter(point => this.position.x + point.x > bullet.position.x + bullet.getMinMax().min.x
-                && this.position.y + point.y > bullet.position.y + bullet.getMinMax().max.y))
+            console.log(overlappingPixels);
+
+            overlappingPixels.forEach(pixel => {
+                this.drawPoints.splice(this.drawPoints.indexOf(pixel), 1);
+            })
+        }
+
     }
 
     update(bullet) {
         this.checkCollisions(bullet);
-    }
-
-    checkOverlappingPixels(object, pixels) {
-        pixels.forEach(pixel => {
-            let pixelTranslated = new Vector(this.position.x + pixel.x, this.position.y + pixel.y);
-
-            if (this.isPointOverlapping(object, pixelTranslated)) {
-                this.drawPoints.splice(this.drawPoints.indexOf(pixel), 1);
-                object.toDelete = true;
-            }
-
-        });
-    }
-
-    isPointOverlapping(object, pixel) {
-        return object.detectPixelCollision(pixel);
     }
 
     draw(context) {
