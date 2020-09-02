@@ -1,7 +1,10 @@
 class Shield extends GameObject {
     constructor(x, y) {
         super(x, y)
-        this.setDrawPoints(this.getShape());
+        this.setDrawPoints({
+            "main":
+                { "drawPoints": this.getShape() }
+        });
         this.fillColour = "#298a51" //green
     }
 
@@ -24,7 +27,7 @@ class Shield extends GameObject {
 
     checkCollisions(bullet) {
         if (this.detectAABBCollision(bullet)) {
-            let overlappingPixels = this.drawPoints.filter(pixel =>
+            let overlappingPixels = this.drawObject.main.drawPoints.filter(pixel =>
                 this.position.x + pixel.x > bullet.position.x + bullet.getMinMax().min.x
                 && this.position.x + pixel.x < bullet.position.x + bullet.getMinMax().max.x
                 && this.position.y + pixel.y > bullet.position.y + bullet.getMinMax().min.y
@@ -33,7 +36,7 @@ class Shield extends GameObject {
             console.log(overlappingPixels);
 
             overlappingPixels.forEach(pixel => {
-                this.drawPoints.splice(this.drawPoints.indexOf(pixel), 1);
+                this.drawObject.main.drawPoints.splice(this.drawObject.main.drawPoints.indexOf(pixel), 1);
                 bullet.toDelete = true;
             })
         }
@@ -41,7 +44,7 @@ class Shield extends GameObject {
     }
 
     checkDelete() {
-        if (this.drawPoints.length == 0)
+        if (this.drawObject.main.drawPoints.length == 0)
             this.toDelete = true;
     }
 
