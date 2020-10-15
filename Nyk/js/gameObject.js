@@ -1,7 +1,6 @@
 class GameObject {
     drawObject = {};
     position = null;
-    fillColour = "#ffffff"
     minMax = {};
     toDelete = false;
 
@@ -9,8 +8,8 @@ class GameObject {
         this.position = new Vector(x, y);
     }
 
-    setDrawPoints(points) {
-        this.drawObject = points;
+    setDrawObject(drawObject) {
+        this.drawObject = drawObject;
         this.getObjectBounds();
     }
 
@@ -72,28 +71,28 @@ class GameObject {
     }
 
     drawByLine(context) {
-        Object.values(this.drawObject).forEach(obj => {
+        Object.values(this.drawObject).forEach(drawable => {
             context.beginPath();
-            context.moveTo(this.position.x + obj.drawPoints[0].x, this.position.y + obj.drawPoints[0].y);
-            obj.drawPoints.forEach(point => {
-                if (point != obj.drawPoints[0]) {
+            context.moveTo(this.position.x + drawable.drawPoints[0].x, this.position.y + drawable.drawPoints[0].y);
+            drawable.drawPoints.forEach(point => {
+                if (point != drawable.drawPoints[0]) {
                     context.lineTo(this.position.x + point.x, this.position.y + point.y)
                 }
             });
 
             context.closePath();
-            this.setDrawModes(context, "#ffffff", this.fillColour);
+            this.setDrawModes(context, "#ffffff", drawable.fillColour);
         });
     }
 
     drawByPixel(context) {
-        Object.values(this.drawObject).forEach(obj => {
+        Object.values(this.drawObject).forEach(drawable => {
             context.beginPath();
-            obj.drawPoints.forEach(drawPoint => {
+            drawable.drawPoints.forEach(drawPoint => {
                 context.rect(this.position.x + drawPoint.x, this.position.y + drawPoint.y, 1, 1);
             });
             context.closePath();
-            this.setDrawModes(context, "", this.fillColour);
+            this.setDrawModes(context, "", drawable.fillColour);
         });
     }
 
