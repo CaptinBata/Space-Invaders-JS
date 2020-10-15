@@ -33,10 +33,8 @@ class Shield extends GameObject {
                 && this.position.y + pixel.y > bullet.position.y + bullet.getMinMax().min.y
                 && this.position.y + pixel.y < bullet.position.y + bullet.getMinMax().max.y);
 
-            console.log(overlappingPixels);
-
             overlappingPixels.forEach(pixel => {
-                this.drawObject.main.drawPoints.splice(this.drawObject.main.drawPoints.indexOf(pixel), 1);
+                Utilities.removeElement(this.drawObject.main.drawPoints, pixel)
                 bullet.toDelete = true;
             })
         }

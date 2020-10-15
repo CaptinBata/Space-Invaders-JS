@@ -28,7 +28,7 @@ class Player extends GameObject {
     checkDelete() {
         this.bullets.forEach(bullet => {
             if (bullet.toDelete)
-                this.bullets.splice(this.bullets.indexOf(bullet), 1);
+                Utilities.removeElement(this.bullets, bullet)
         });
 
         //Add in collision of alien bullets here
@@ -39,21 +39,21 @@ class Player extends GameObject {
             switch (key) {
                 case "a":
                     this.position.x -= 15;
-                    keys.splice(keys.indexOf(key), 1); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case "d":
                     this.position.x += 15;
-                    keys.splice(keys.indexOf(key), 1); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case " ":
                     if (this.bullets.length < 3)
                         this.bullets.push(new Bullet(this.position.x, this.position.y, false))
+                    break;
             }
+            Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
         });
         this.bullets.forEach(bullet => {
             bullet.update();
             if (bullet.toDelete)
-                this.bullets.splice(this.bullets.indexOf(bullet), 1);
+                Utilities.removeElement(this.bullets, bullet);
         })
     }
 

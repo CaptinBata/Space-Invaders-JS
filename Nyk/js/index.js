@@ -56,7 +56,7 @@ class Game {
         this.shields.forEach(shield => {
             shield.checkDelete();
             if (shield.toDelete)
-                this.shields.splice(this.shields.indexOf(shield), 1);
+                Utilities.removeElement(this.shields, shield);
         });
 
         this.player.checkDelete();
