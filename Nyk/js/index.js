@@ -73,7 +73,6 @@ class Game {
         });
 
         this.checkDelete();
-        this.keys = []; //clear the array for the next frame
     }
 
     draw() {

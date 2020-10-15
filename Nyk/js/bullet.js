@@ -9,7 +9,6 @@ class Bullet extends GameObject {
                     new Vector(2.5, 15),
                     new Vector(-2.5, 15),
                 ],
-                "fillColour": "ffffff",
             }
         })
         this.alien = alien;
