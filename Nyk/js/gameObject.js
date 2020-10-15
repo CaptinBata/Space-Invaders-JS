@@ -1,7 +1,6 @@
 class GameObject {
     drawObject = {};
     position = null;
-    minMax = {};
     toDelete = false;
 
     constructor(x, y) {
