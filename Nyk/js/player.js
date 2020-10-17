@@ -41,17 +41,20 @@ class Player extends GameObject {
             switch (key) {
                 case "a":
                     this.position.x -= 15;
+                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case "d":
                     this.position.x += 15;
+                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case " ":
                     if (this.bullets.length < 3)
                         this.bullets.push(new Bullet(this.position.x, this.position.y, false))
+                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
             }
-            Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
         });
+
         this.bullets.forEach(bullet => {
             bullet.update();
             if (bullet.toDelete)

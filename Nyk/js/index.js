@@ -1,5 +1,6 @@
 class Game {
     keys = [];
+    debug = false;
     constructor() {
         this.setupCanvas();
         this.setupEvents();
@@ -89,17 +90,36 @@ class Game {
         });
 
         this.checkDelete();
+        this.checkDebug(this.keys);
+        this.keys = [];
+    }
+
+    checkDebug(keys) {
+        keys.forEach(key => {
+            switch (key) {
+                case "q":
+                    this.debug = !this.debug; //toggle debug mode
+                    break;
+            }
+        })
     }
 
     draw() {
         this.clearScreen();
+
         this.player.draw(this.context);
+        
         this.shields.forEach(shield => {
             shield.draw(this.context)
         })
+
         this.aliens.forEach(alien => {
             alien.draw(this.context)
         })
+
+        if (this.debug) {
+
+        }
     }
 
     main() {

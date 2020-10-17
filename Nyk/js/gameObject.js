@@ -104,11 +104,11 @@ class GameObject {
     }
 
     setDrawModes(context, strokeStyle, fillStyle) {
-        if (strokeStyle != "") {
+        if (strokeStyle != "" || undefined) {
             context.strokeStyle = strokeStyle
             context.stroke();
         }
-        if (fillStyle != "") {
+        if (fillStyle != "" || undefined) {
             context.fillStyle = fillStyle
             context.fill();
         }
