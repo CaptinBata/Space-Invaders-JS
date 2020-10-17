@@ -5,7 +5,8 @@ class Shield extends GameObject {
             "main":
             {
                 "drawPoints": this.getShape(),
-                "fillColour": "#298a51" //green
+                "fillColour": "#298a51", //green
+                "strokeColour": "",
             }
         });
 

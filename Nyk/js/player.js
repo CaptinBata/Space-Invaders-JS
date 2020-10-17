@@ -17,6 +17,7 @@ class Player extends GameObject {
                     new Vector(-2.5, 0),
                 ],
                 "fillColour": "#ffffff",
+                "strokeColour": "#ffffff",
             }
         })
 

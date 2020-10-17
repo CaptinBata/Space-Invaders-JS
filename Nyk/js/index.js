@@ -38,6 +38,7 @@ class Game {
 
     setupGame() {
         this.player = new Player(this.getWindowWidth() / 2, this.getWindowHeight() - 30)
+        this.aliens = [new Alien(this.getWindowWidth() / 2, this.getWindowHeight() / 2, 1)]
         this.shields = [];
         this.seperation = this.getWindowWidth() / 4;
 
@@ -80,6 +81,9 @@ class Game {
         this.player.draw(this.context);
         this.shields.forEach(shield => {
             shield.draw(this.context)
+        })
+        this.aliens.forEach(alien => {
+            alien.draw(this.context)
         })
     }
 

@@ -80,7 +80,7 @@ class GameObject {
             });
 
             context.closePath();
-            this.setDrawModes(context, "#ffffff", drawable.fillColour);
+            this.setDrawModes(context, drawable.strokeColour, drawable.fillColour);
         });
     }
 
@@ -91,7 +91,7 @@ class GameObject {
                 context.rect(this.position.x + drawPoint.x, this.position.y + drawPoint.y, 1, 1);
             });
             context.closePath();
-            this.setDrawModes(context, "", drawable.fillColour);
+            this.setDrawModes(context, drawable.strokeColour, drawable.fillColour);
         });
     }
 
