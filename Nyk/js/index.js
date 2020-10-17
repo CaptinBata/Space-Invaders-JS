@@ -38,13 +38,28 @@ class Game {
 
     setupGame() {
         this.player = new Player(this.getWindowWidth() / 2, this.getWindowHeight() - 30)
-        this.aliens = [new Alien(this.getWindowWidth() / 2, this.getWindowHeight() / 2, 1)]
+
+        this.aliens = []
         this.shields = [];
-        this.seperation = this.getWindowWidth() / 4;
+
+        let alienWidth = new Alien(0, 0, 1).getWidth(); //Used for spacing
+        let alienHeight = new Alien(0, 0, 1).getHeight(); //Used for spacing
+
+        let alienRowSpacing = alienWidth * 1.5;
+        let alienColumnSpacing = alienHeight * 1.5;
+
+        let shieldSpacing = this.getWindowWidth() / 4;
 
         for (let i = 0; i < 4; i++) {
-            this.shields.push(new Shield(150 + (i * this.seperation), this.getWindowHeight() - 200))
+            this.shields.push(new Shield(150 + (i * shieldSpacing), this.getWindowHeight() - 200))
         }
+
+        for (let y = 0; y < 4; y++) {
+            for (let x = 0; x < 15; x++) {
+                this.aliens.push(new Alien(250 + (x * alienRowSpacing), (this.getWindowHeight() * 0.25) - (y * alienColumnSpacing), y));
+            }
+        }
+
     }
 
     gameLoop() {

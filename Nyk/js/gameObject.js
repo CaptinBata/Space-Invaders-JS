@@ -69,6 +69,14 @@ class GameObject {
         this.drawByLine(context);
     }
 
+    getWidth() {
+        return this.getMinMax().max.x - this.getMinMax().min.x
+    }
+
+    getHeight() {
+        return this.getMinMax().max.y - this.getMinMax().min.y
+    }
+
     drawByLine(context) {
         Object.values(this.drawObject).forEach(drawable => {
             context.beginPath();
