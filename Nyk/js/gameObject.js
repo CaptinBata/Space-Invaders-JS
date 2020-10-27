@@ -13,7 +13,7 @@ class GameObject {
     }
 
     getMinMax() {
-        return this.drawObject.main.minMax;
+        return this.minMax;
     }
 
     detectAABBCollision(other) {
@@ -39,7 +39,7 @@ class GameObject {
         return (collisions.minX || collisions.maxX) && (collisions.minY || collisions.maxY); //If horizontal point and vertical point overlapping, doesn't matter which ones or if multiple of either
     }
 
-    getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection
+    assignIndividualObjectBounds() {
         Object.values(this.drawObject).forEach(obj => {
             let min = new Vector(1000000, 1000000);
             let max = new Vector(-1000000, -1000000);
@@ -61,8 +61,36 @@ class GameObject {
                 max: max
             }
 
-            obj.minMax = minMax;
+            obj.minMax = minMax; //Assign each individual part of a drawObject's minMax
         })
+    }
+
+    assignTotalObjectBounds() {
+        let min = new Vector(1000000, 1000000);
+        let max = new Vector(-1000000, -1000000);
+
+        Object.values(this.drawObject).forEach(obj => {
+            if (obj.minMax.max.x > max.x)
+                max = new Vector(obj.minMax.max.x, max.y)
+            if (obj.minMax.max.y > max.y)
+                max = new Vector(max.x, obj.minMax.max.y)
+            if (obj.minMax.min.x < min.x)
+                min = new Vector(obj.minMax.min.x, min.y)
+            if (obj.minMax.min.y < min.y)
+                min = new Vector(min.x, obj.minMax.min.y)
+        })
+
+        let minMax = {
+            min: min,
+            max: max
+        }
+
+        this.minMax = minMax; //Assign overall box of the entire object
+    }
+
+    getObjectBounds() { //Used to find the AABB (Axis-Aligned Bounding Box). Basically the basic box around the object to be used as primitive hit detection
+        this.assignIndividualObjectBounds();
+        this.assignTotalObjectBounds();
     }
 
     draw(context) {
@@ -98,6 +126,7 @@ class GameObject {
             drawable.drawPoints.forEach(drawPoint => {
                 context.rect(this.position.x + drawPoint.x, this.position.y + drawPoint.y, 1, 1);
             });
+
             context.closePath();
             this.setDrawModes(context, drawable.strokeColour, drawable.fillColour);
         });

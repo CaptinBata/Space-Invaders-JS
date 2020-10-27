@@ -43,8 +43,9 @@ class Game {
         this.aliens = []
         this.shields = [];
 
-        let alienWidth = new Alien(0, 0, 1).getWidth(); //Used for spacing
-        let alienHeight = new Alien(0, 0, 1).getHeight(); //Used for spacing
+        let alienForSpacing = new Alien(0, 0, 1);
+        let alienWidth = alienForSpacing.getWidth(); //Used for spacing
+        let alienHeight = alienForSpacing.getHeight(); //Used for spacing
 
         let alienRowSpacing = alienWidth * 1.5;
         let alienColumnSpacing = alienHeight * 1.5;
