@@ -97,6 +97,10 @@ class GameObject {
         this.drawByLine(context);
     }
 
+    toGlobalCoords(localVector) {
+        return new Vector(this.position.x + localVector.x, this.position.y + localVector.y);
+    }
+
     getWidth() {
         return this.getMinMax().max.x - this.getMinMax().min.x
     }

@@ -4,6 +4,7 @@ class Game {
     constructor() {
         this.setupCanvas();
         this.setupEvents();
+        this.debugObject = new DebugObject(0, 0);
     }
 
     setupCanvas() {
@@ -100,9 +101,24 @@ class Game {
             switch (key) {
                 case "q":
                     this.debug = !this.debug; //toggle debug mode
+                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
             }
         })
+    }
+
+    drawDebug() {
+        if (this.debug) {
+            this.debugObject.drawObjectBounds(this.context, this.player)
+
+            this.shields.forEach(shield => {
+                this.debugObject.drawObjectBounds(this.context, shield)
+            })
+
+            this.aliens.forEach(alien => {
+                this.debugObject.drawObjectBounds(this.context, alien)
+            })
+        }
     }
 
     draw() {
@@ -118,9 +134,7 @@ class Game {
             alien.draw(this.context)
         })
 
-        if (this.debug) {
-
-        }
+        this.drawDebug();
     }
 
     main() {
