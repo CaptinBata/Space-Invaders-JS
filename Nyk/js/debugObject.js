@@ -4,6 +4,6 @@ class DebugObject extends GameObject {
         this.setDrawObject({
             "left bar": {
                 "drawPoints": [],
-            })
+            },)
     }
 }

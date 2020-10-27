@@ -10,6 +10,9 @@ class Alien extends GameObject {
             case 1:
                 this.setDrawObject(alienStructureOne)
                 break;
+            case 2:
+                this.setDrawObject(alienStructureTwo)
+                break;
             default:
                 this.setDrawObject(alienStructureOne)
                 break;

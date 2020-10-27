@@ -108,7 +108,7 @@ class Game {
         this.clearScreen();
 
         this.player.draw(this.context);
-        
+
         this.shields.forEach(shield => {
             shield.draw(this.context)
         })
