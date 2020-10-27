@@ -56,9 +56,9 @@ class Game {
             this.shields.push(new Shield(150 + (i * shieldSpacing), this.getWindowHeight() - 200))
         }
 
-        for (let y = 0; y < 4; y++) {
+        for (let y = 0; y < 3; y++) {
             for (let x = 0; x < 15; x++) {
-                this.aliens.push(new Alien(250 + (x * alienRowSpacing), (this.getWindowHeight() * 0.25) - (y * alienColumnSpacing), y));
+                this.aliens.push(new Alien(250 + (x * alienRowSpacing), (this.getWindowHeight() * 0.05) + (y * alienColumnSpacing), y));
             }
         }
 

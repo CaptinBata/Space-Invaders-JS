@@ -7,11 +7,11 @@ class Alien extends GameObject {
 
     setAlienShape(alienIndex) {
         switch (alienIndex) {
-            case 1:
+            case 0:
                 this.setDrawObject(this.alienStructureOne)
                 delete this.alienStructureTwo;
                 break;
-            case 2:
+            case 1:
                 this.setDrawObject(this.alienStructureTwo)
                 delete this.alienStructureOne;
                 break;
