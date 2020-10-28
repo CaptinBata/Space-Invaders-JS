@@ -13,7 +13,7 @@ class DebugObject extends GameObject {
     update(timestamp) {
         if (this.lastTime != null) {
             let timeTaken = timestamp - this.lastTime;
-            this.fps = 1000 / timeTaken;
+            this.fps = 1000 / timeTaken; // 1000 because 1000 milliseconds in a second
         }
         this.lastTime = timestamp
     }
