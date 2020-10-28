@@ -21,19 +21,25 @@ class GameObject {
             minX: false, maxX: false, minY: false, maxY: false
         }
 
-        if (other.position.x + other.getMinMax().min.x > this.position.x + this.getMinMax().min.x
-            && other.position.x + other.getMinMax().min.x < this.position.x + this.getMinMax().max.x)
+        let otherMinGlobal = other.toGlobalCoords(other.getMinMax().min);
+        let otherMaxGlobal = other.toGlobalCoords(other.getMinMax().max);
+
+        let thisMinGlobal = this.toGlobalCoords(this.getMinMax().min)
+        let thisMaxGlobal = this.toGlobalCoords(this.getMinMax().max)
+
+        if (otherMinGlobal.x > thisMinGlobal.x
+            && otherMinGlobal.x < thisMaxGlobal.x)
             collisions.minX = true;
-        if (other.position.x + other.getMinMax().max.x > this.position.x + this.getMinMax().min.x
-            && other.position.x + other.getMinMax().max.x < this.position.x + this.getMinMax().max.x)
+        if (otherMaxGlobal.x > thisMinGlobal.x
+            && otherMaxGlobal.x < thisMaxGlobal.x)
             collisions.maxX = true;
 
 
-        if (other.position.y + other.getMinMax().min.y > this.position.y + this.getMinMax().min.y
-            && other.position.y + other.getMinMax().min.y < this.position.y + this.getMinMax().max.y)
+        if (otherMinGlobal.y > thisMinGlobal.y
+            && otherMinGlobal.y < thisMaxGlobal.y)
             collisions.minY = true;
-        if (other.position.y + other.getMinMax().max.y > this.position.y + this.getMinMax().min.y
-            && other.position.y + other.getMinMax().max.y < this.position.y + this.getMinMax().max.y)
+        if (otherMaxGlobal.y > thisMinGlobal.y
+            && otherMaxGlobal.y < thisMaxGlobal.y)
             collisions.maxY = true;
 
         return (collisions.minX || collisions.maxX) && (collisions.minY || collisions.maxY); //If horizontal point and vertical point overlapping, doesn't matter which ones or if multiple of either
@@ -112,10 +118,12 @@ class GameObject {
     drawByLine(context) {
         Object.values(this.drawObject).forEach(drawable => {
             context.beginPath();
-            context.moveTo(this.position.x + drawable.drawPoints[0].x, this.position.y + drawable.drawPoints[0].y);
-            drawable.drawPoints.forEach(point => {
-                if (point != drawable.drawPoints[0]) {
-                    context.lineTo(this.position.x + point.x, this.position.y + point.y)
+            context.moveTo(this.toGlobalCoords(drawable.drawPoints[0]).x, this.toGlobalCoords(drawable.drawPoints[0]).y);
+
+            drawable.drawPoints.forEach(drawPoint => {
+                if (drawPoint != drawable.drawPoints[0]) {
+                    let drawPointGlobal = this.toGlobalCoords(drawPoint);
+                    context.lineTo(drawPointGlobal.x, drawPointGlobal.y)
                 }
             });
 
@@ -127,8 +135,10 @@ class GameObject {
     drawByPixel(context) {
         Object.values(this.drawObject).forEach(drawable => {
             context.beginPath();
+
             drawable.drawPoints.forEach(drawPoint => {
-                context.rect(this.position.x + drawPoint.x, this.position.y + drawPoint.y, 1, 1);
+                let drawPointGlobal = this.toGlobalCoords(drawPoint);
+                context.rect(drawPointGlobal.x, drawPointGlobal.y, 1, 1);
             });
 
             context.closePath();

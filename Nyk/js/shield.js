@@ -31,11 +31,18 @@ class Shield extends GameObject {
 
     checkCollisions(bullet) {
         if (this.detectAABBCollision(bullet)) {
-            let overlappingPixels = this.drawObject.main.drawPoints.filter(pixel =>
-                this.position.x + pixel.x > bullet.position.x + bullet.getMinMax().min.x
-                && this.position.x + pixel.x < bullet.position.x + bullet.getMinMax().max.x
-                && this.position.y + pixel.y > bullet.position.y + bullet.getMinMax().min.y
-                && this.position.y + pixel.y < bullet.position.y + bullet.getMinMax().max.y);
+            let bulletMinGlobal = bullet.toGlobalCoords(bullet.getMinMax().min)
+            let bulletMaxGlobal = bullet.toGlobalCoords(bullet.getMinMax().max)
+
+            let overlappingPixels = this.drawObject.main.drawPoints.filter(pixel => {
+                let pixelGlobal = this.toGlobalCoords(pixel);
+
+                if (pixelGlobal.x > bulletMinGlobal.x
+                    && pixelGlobal.x < bulletMaxGlobal.x
+                    && pixelGlobal.y > bulletMinGlobal.y
+                    && pixelGlobal.y < bulletMaxGlobal.y)
+                    return pixel
+            });
 
             overlappingPixels.forEach(pixel => {
                 Utilities.removeElement(this.drawObject.main.drawPoints, pixel)
