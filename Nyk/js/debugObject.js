@@ -10,12 +10,12 @@ class DebugObject extends GameObject {
         })
     }
 
-    update() {
+    update(timestamp) {
         if (this.lastTime != null) {
-            let timeTaken = Date.now() - this.lastTime;
+            let timeTaken = timestamp - this.lastTime;
             this.fps = 1000 / timeTaken;
         }
-        this.lastTime = Date.now();
+        this.lastTime = timestamp
     }
 
     draw(context, windowWidth, windowHeight) {

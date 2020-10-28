@@ -65,8 +65,8 @@ class Game {
 
     }
 
-    gameLoop() {
-        this.update();
+    gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
+        this.update(timestamp);
         this.draw();
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -83,7 +83,7 @@ class Game {
             delete this.player;
     }
 
-    update() {
+    update(timestamp) {
         this.player.update(this.keys);
         this.shields.forEach(shield => {
             this.player.getBullets().forEach(bullet => {
@@ -94,7 +94,7 @@ class Game {
         this.checkDelete();
         this.checkDebug(this.keys);
         if (this.debug)
-            this.debugObject.update();
+            this.debugObject.update(timestamp);
         this.keys = [];
     }
 
