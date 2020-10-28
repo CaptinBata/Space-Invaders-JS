@@ -93,6 +93,8 @@ class Game {
 
         this.checkDelete();
         this.checkDebug(this.keys);
+        if (this.debug)
+            this.debugObject.update();
         this.keys = [];
     }
 
@@ -118,6 +120,8 @@ class Game {
             this.aliens.forEach(alien => {
                 this.debugObject.drawObjectBounds(this.context, alien)
             })
+
+            this.debugObject.draw(this.context, this.getWindowWidth(), this.getWindowHeight());
         }
     }
 

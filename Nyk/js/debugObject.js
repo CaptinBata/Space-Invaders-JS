@@ -1,4 +1,6 @@
 class DebugObject extends GameObject {
+    lastTime = null;
+    fps = 0;
     constructor(x, y) {
         super(x, y);
         this.setDrawObject({
@@ -6,6 +8,21 @@ class DebugObject extends GameObject {
                 "drawPoints": [],
             }
         })
+    }
+
+    update() {
+        if (this.lastTime != null) {
+            let timeTaken = Date.now() - this.lastTime;
+            this.fps = 1000 / timeTaken;
+        }
+        this.lastTime = Date.now();
+    }
+
+    draw(context, windowWidth, windowHeight) {
+        this.setDrawModes(context, "", "#ffffff")
+
+        context.font = "14px Gill Sans MT";
+        context.fillText(`FPS: ${this.fps.toFixed(2)}`, windowWidth * 0.96, windowHeight * 0.99);
     }
 
     drawObjectBounds(context, objectToDraw) {
@@ -34,7 +51,7 @@ class DebugObject extends GameObject {
             context.lineTo(minObjGlobal.x, maxObjGlobal.y)
 
             context.closePath();
-            this.setDrawModes(context, "", "rgba(102, 225, 0, 0.85)"); //light green for individual hitboxes
+            this.setDrawModes(context, "", "rgba(102, 225, 0, 0.45)"); //light green for individual hitboxes
         });
     }
 }
