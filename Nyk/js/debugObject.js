@@ -1,12 +1,71 @@
 class DebugObject extends GameObject {
     lastTime = null;
     fps = 0;
-    constructor(x, y) {
+    constructor(x, y, playableArea) {
+        let xMidPosition = playableArea.min.x + ((playableArea.max.x - playableArea.min.x) / 2);
+        let yMidPosition = playableArea.min.y + ((playableArea.max.y - playableArea.min.y) / 2);
         super(x, y);
         this.setDrawObject({
             "left bar": {
-                "drawPoints": [],
-            }
+                "drawPoints": [
+                    new Vector(playableArea.min.x - 1, playableArea.min.y),
+                    new Vector(playableArea.min.x + 1, playableArea.min.y),
+                    new Vector(playableArea.min.x + 1, playableArea.max.y),
+                    new Vector(playableArea.min.x - 1, playableArea.max.y),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
+            "top bar": {
+                "drawPoints": [
+                    new Vector(playableArea.min.x, playableArea.min.y - 1),
+                    new Vector(playableArea.max.x, playableArea.min.y - 1),
+                    new Vector(playableArea.max.x, playableArea.min.y + 1),
+                    new Vector(playableArea.min.x, playableArea.min.y + 1),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
+            "right bar": {
+                "drawPoints": [
+                    new Vector(playableArea.max.x + 1, playableArea.min.y),
+                    new Vector(playableArea.max.x + 1, playableArea.max.y),
+                    new Vector(playableArea.max.x - 1, playableArea.max.y),
+                    new Vector(playableArea.max.x - 1, playableArea.min.y),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
+            "bottom bar": {
+                "drawPoints": [
+                    new Vector(playableArea.max.x, playableArea.max.y - 1),
+                    new Vector(playableArea.max.x, playableArea.max.y + 1),
+                    new Vector(playableArea.min.x, playableArea.max.y + 1),
+                    new Vector(playableArea.min.x, playableArea.max.y - 1),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
+            "x mid point": {
+                "drawPoints": [
+                    new Vector(xMidPosition - 1, playableArea.min.y),
+                    new Vector(xMidPosition + 1, playableArea.min.y),
+                    new Vector(xMidPosition + 1, playableArea.max.y),
+                    new Vector(xMidPosition - 1, playableArea.max.y),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
+            "y mid point": {
+                "drawPoints": [
+                    new Vector(playableArea.min.x, yMidPosition - 1),
+                    new Vector(playableArea.max.x, yMidPosition - 1),
+                    new Vector(playableArea.max.x, yMidPosition + 1),
+                    new Vector(playableArea.min.x, yMidPosition + 1),
+                ],
+                "fillColour": "rgba(209, 49, 17, 0.45)",
+                "strokeColour": ""
+            },
         })
     }
 
@@ -19,7 +78,7 @@ class DebugObject extends GameObject {
     }
 
     draw(context, windowWidth, windowHeight) {
-        this.setDrawModes(context, "", "#ffffff")
+        this.drawByLine(context);
 
         context.font = "14px Gill Sans MT";
         context.fillText(`FPS: ${this.fps.toFixed(2)}`, windowWidth * 0.96, windowHeight * 0.99);

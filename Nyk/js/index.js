@@ -4,14 +4,21 @@ class Game {
     constructor() {
         this.setupCanvas();
         this.setupEvents();
-        this.debugObject = new DebugObject(0, 0);
+        this.debugObject = new DebugObject(0, 0, this.playableArea);
     }
 
     setupCanvas() {
         this.canvas = document.getElementById("gameCanvas");
         this.canvas.width = this.getWindowWidth();
         this.canvas.height = this.getWindowHeight();
+
         this.context = this.canvas.getContext("2d");
+
+        this.playableArea = {
+            min: new Vector(this.getWindowWidth() * 0.15, this.getWindowHeight() * 0.10),
+            max: new Vector(this.getWindowWidth() * 0.85, this.getWindowHeight() * 0.90)
+        }
+
         this.clearScreen();
     }
 
@@ -38,31 +45,54 @@ class Game {
         return window.innerHeight - 25;
     };
 
-    setupGame() {
-        this.player = new Player(this.getWindowWidth() / 2, this.getWindowHeight() - 30)
+    setupPlayer() {
+        let playerHeight = new Player(0, 0).getHeight();
+        let playerMidPosition = this.playableArea.min.x + ((this.playableArea.max.x - this.playableArea.min.x) / 2);
 
-        this.aliens = []
-        this.shields = [];
+        this.player = new Player(playerMidPosition, this.playableArea.max.y - (playerHeight * 0.5))
+    }
+
+    setupAliens() {
+        this.aliens = [];
 
         let alienForSpacing = new Alien(0, 0, 0);
-        let alienWidth = alienForSpacing.getWidth(); //Used for spacing
-        let alienHeight = alienForSpacing.getHeight(); //Used for spacing
+        let alienWidth = alienForSpacing.getWidth();
+        let alienHeight = alienForSpacing.getHeight();
 
         let alienRowSpacing = alienWidth * 1.5;
         let alienColumnSpacing = alienHeight * 1.5;
+        let aliensPerRow = Math.round((this.playableArea.max.x - this.playableArea.min.x) / alienRowSpacing);
 
-        let shieldSpacing = this.getWindowWidth() / 4;
-
-        for (let i = 0; i < 4; i++) {
-            this.shields.push(new Shield(150 + (i * shieldSpacing), this.getWindowHeight() - 200))
-        }
+        let alienStartXPoint = this.playableArea.min.x + (alienWidth * 0.5);
+        let alienStartYPoint = this.playableArea.min.y + (alienHeight * 0.5);
 
         for (let y = 0; y < 3; y++) {
-            for (let x = 0; x < 15; x++) {
-                this.aliens.push(new Alien(250 + (x * alienRowSpacing), (this.getWindowHeight() * 0.05) + (y * alienColumnSpacing), y));
+            for (let x = 0; x < aliensPerRow; x++) {
+                this.aliens.push(new Alien(alienStartXPoint + (x * alienRowSpacing), alienStartYPoint + (y * alienColumnSpacing), y))
             }
         }
+    }
 
+    setupShields() {
+        this.shields = [];
+
+        let shieldForSpacing = new Shield(0, 0);
+        let shieldWidth = shieldForSpacing.getWidth();
+        let shieldHeight = shieldForSpacing.getHeight();
+
+        let shieldSpacing = Math.round((this.playableArea.max.x - this.playableArea.min.x) / 4)
+        let shieldXStartPoint = this.playableArea.min.x + (shieldWidth * 0.5);
+        let shieldYStartPoint = this.playableArea.max.y * 0.8;
+
+        for (let x = 0; x < 4; x++) {
+            this.shields.push(new Shield(shieldXStartPoint + shieldSpacing * x, shieldYStartPoint))
+        }
+    }
+
+    setupGame() {
+        this.setupPlayer();
+        this.setupAliens();
+        this.setupShields();
     }
 
     gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
