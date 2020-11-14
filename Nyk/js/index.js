@@ -68,7 +68,7 @@ class Game {
 
         for (let y = 0; y < 3; y++) {
             for (let x = 0; x < aliensPerRow; x++) {
-                this.aliens.push(new Alien(alienStartXPoint + (x * alienRowSpacing), alienStartYPoint + (y * alienColumnSpacing), y))
+                this.aliens.push(new Alien(alienStartXPoint + (x * alienRowSpacing), alienStartYPoint + (y * alienColumnSpacing), y)) // the , y here denotes the type of alien to be drawn
             }
         }
     }
@@ -108,23 +108,37 @@ class Game {
                 Utilities.removeElement(this.shields, shield);
         });
 
+        this.aliens.forEach(alien => {
+            if (alien.toDelete)
+                Utilities.removeElement(this.aliens, alien);
+        })
+
         this.player.checkDelete();
+
         if (this.player.toDelete)
             delete this.player;
     }
 
     update(timestamp) {
         this.player.update(this.keys);
+
         this.shields.forEach(shield => {
             this.player.getBullets().forEach(bullet => {
                 shield.update(bullet);
             })
         });
 
+        this.aliens.forEach(alien => {
+            alien.update(this.player.getBullets());
+        })
+
         this.checkDelete();
+
         this.checkDebug(this.keys);
+
         if (this.debug)
             this.debugObject.update(timestamp);
+
         this.keys = [];
     }
 

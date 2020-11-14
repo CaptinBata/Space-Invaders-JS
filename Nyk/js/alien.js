@@ -6,7 +6,7 @@ class Alien extends GameObject {
     }
 
     setAlienShape(alienIndex) {
-        switch (alienIndex) {
+        switch (alienIndex) { //We delete the other structures as they are no longer needed once assigned. This saves us some space.
             case 0:
                 this.setDrawObject(this.alienStructureOne)
                 delete this.alienStructureTwo;
@@ -25,8 +25,22 @@ class Alien extends GameObject {
             default:
                 this.setDrawObject(this.alienStructureOne)
                 delete this.alienStructureTwo;
+                delete this.alienStructureThree;
                 break;
         }
+    }
+
+    checkBulletCollision(bullets) {
+        bullets.forEach(bullet => {
+            if (this.detectAABBCollision(bullet)) {
+                this.toDelete = true;
+                bullet.toDelete = true;
+            }
+        })
+    }
+
+    update(bullets) {
+        this.checkBulletCollision(bullets)
     }
 
     alienStructureOne = {
