@@ -66,22 +66,28 @@ class Game {
         let alienStartXPoint = this.playableArea.min.x + (alienWidth * 0.5) + alienRowSpacing;
         let alienStartYPoint = this.playableArea.min.y + (alienHeight * 0.5);
 
+        let alienEndXPoint = 0;
+
         for (let y = 0; y < 3; y++) {
             for (let x = 0; x < aliensPerRow; x++) {
+                if (x == aliensPerRow - 1)
+                    alienEndXPoint = alienStartXPoint + (x * alienRowSpacing)
                 this.aliens.push(new Alien(alienStartXPoint + (x * alienRowSpacing), alienStartYPoint + (y * alienColumnSpacing), y)) // the , y here denotes the type of alien to be drawn
             }
         }
+
+        return { startPos: alienStartXPoint, endPos: alienEndXPoint }
     }
 
-    setupShields() {
+    setupShields(alienStartEndPoints) {
         this.shields = [];
 
         let shieldForSpacing = new Shield(0, 0);
         let shieldWidth = shieldForSpacing.getWidth();
         let shieldHeight = shieldForSpacing.getHeight();
 
-        let shieldSpacing = Math.round((this.playableArea.max.x - this.playableArea.min.x) / 4)
-        let shieldXStartPoint = this.playableArea.min.x + (shieldWidth * 0.5);
+        let shieldSpacing = Math.round((alienStartEndPoints.endPos - alienStartEndPoints.startPos) / 3)
+        let shieldXStartPoint = alienStartEndPoints.startPos
         let shieldYStartPoint = this.playableArea.max.y * 0.8;
 
         for (let x = 0; x < 4; x++) {
@@ -91,8 +97,8 @@ class Game {
 
     setupGame() {
         this.setupPlayer();
-        this.setupAliens();
-        this.setupShields();
+        let alienStartEndPoints = this.setupAliens();
+        this.setupShields(alienStartEndPoints);
     }
 
     gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
