@@ -61,9 +61,9 @@ class Game {
 
         let alienRowSpacing = alienWidth * 1.5;
         let alienColumnSpacing = alienHeight * 1.5;
-        let aliensPerRow = Math.round((this.playableArea.max.x - this.playableArea.min.x) / alienRowSpacing);
+        let aliensPerRow = Math.round(((this.playableArea.max.x - alienRowSpacing) - (this.playableArea.min.x + alienRowSpacing)) / alienRowSpacing);
 
-        let alienStartXPoint = this.playableArea.min.x + (alienWidth * 0.5);
+        let alienStartXPoint = this.playableArea.min.x + (alienWidth * 0.5) + alienRowSpacing;
         let alienStartYPoint = this.playableArea.min.y + (alienHeight * 0.5);
 
         for (let y = 0; y < 3; y++) {
