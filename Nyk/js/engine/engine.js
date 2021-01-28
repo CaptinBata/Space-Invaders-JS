@@ -31,13 +31,13 @@ class Engine {
 
     drawDebug() {
         if (this.debug) {
-            this.debugObject.drawObjectBounds(this.context, this.player)
+            this.debugObject.drawObjectBounds(this.context, this.game.player)
 
-            this.shields.forEach(shield => {
+            this.game.shields.forEach(shield => {
                 this.debugObject.drawObjectBounds(this.context, shield)
             })
 
-            this.aliens.forEach(alien => {
+            this.game.aliens.forEach(alien => {
                 this.debugObject.drawObjectBounds(this.context, alien)
             })
 
@@ -45,15 +45,23 @@ class Engine {
         }
     }
 
-    gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
+    update(timestamp) {
         this.game.update();
+
         // Add Co-Routines here
 
         this.checkDebug(this.keys);
 
-        this.draw();
+        if (this.debug)
+            this.debugObject.update(timestamp);
 
-        this.keys = [];
+            this.keys = [];
+    }
+
+    gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
+        this.update(timestamp);
+
+        this.draw();
 
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -67,8 +75,6 @@ class Engine {
                     break;
             }
         })
-        if (this.debug)
-            this.debugObject.update(timestamp);
     }
 
     setupEvents() {
