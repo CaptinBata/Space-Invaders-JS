@@ -1,0 +1,35 @@
+<html>
+  <meta charset="utf-8" />
+  <body>
+    <canvas
+      id="gameCanvas"
+      width="200"
+      height="100"
+      style="border: 1px solid #000000"
+    >
+      Your browser does not support the canvas element.
+    </canvas>
+  </body>
+
+  <script src="js/utilities.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/game/vector.js"></script>
+  <script src="js/game/gameObject.js"></script>
+  <script src="js/game/debugObject.js"></script>
+  <script src="js/game/bullet.js"></script>
+  <script src="js/game/aliens/alien1.js"></script>
+  <script src="js/game/aliens/alien2.js"></script>
+  <script src="js/game/aliens/alien3.js"></script>
+  <script src="js/game/alien.js"></script>
+  <script src="js/game/player.js"></script>
+  <script src="js/game/shield.js"></script>
+  <script src="js/interfaces/iGame.js"></script>
+  <script src="js/game/game.js"></script>
+
+  <script>
+    let engine = new Engine();
+    engine.setGame(new Game(engine))
+
+    engine.start();
+  </script>
+</html>
