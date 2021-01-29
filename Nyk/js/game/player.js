@@ -26,7 +26,9 @@ class Player extends GameObject {
         return this.bullets;
     }
 
-    checkDelete() {
+    checkDelete(gameObjects) {
+        let aliens = gameObjects.filter(gameObject => gameObject instanceof Alien)
+
         this.bullets.forEach(bullet => {
             if (bullet.toDelete)
                 Utilities.removeElement(this.bullets, bullet)
@@ -35,21 +37,21 @@ class Player extends GameObject {
         //Add in collision of alien bullets here
     }
 
-    update(keys) {
-        keys.forEach(key => {
+    update(gameObjects) {
+        Engine.keys.forEach(key => {
             switch (key) {
                 case "a":
                     this.position.x -= 15;
-                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
+                    Utilities.removeElement(Engine.keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case "d":
                     this.position.x += 15;
-                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
+                    Utilities.removeElement(Engine.keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
                 case " ":
                     if (this.bullets.length < 3)
                         this.bullets.push(new Bullet(this.position.x, this.position.y, false))
-                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
+                    Utilities.removeElement(Engine.keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
             }
         });

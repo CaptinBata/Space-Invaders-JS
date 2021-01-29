@@ -31,7 +31,12 @@ class Alien extends GameObject {
         })
     }
 
-    update(bullets) {
-        this.checkBulletCollision(bullets)
+    checkDelete(gameObjects) {
+        let player = gameObjects.filter(gameObject => gameObject instanceof Player)
+        this.checkBulletCollision(player[0].getBullets());
+    }
+
+    update(gameObjects) {
+        let player = gameObjects.filter(gameObject => gameObject instanceof Player)
     }
 }

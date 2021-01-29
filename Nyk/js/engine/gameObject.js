@@ -16,6 +16,14 @@ class GameObject {
         return this.minMax;
     }
 
+    checkDelete(gameObjects) {
+        return null;
+    }
+
+    update(gameObjects) {
+        return null;
+    }
+
     detectAABBCollision(other) {
         let collisions = {
             minX: false, maxX: false, minY: false, maxY: false

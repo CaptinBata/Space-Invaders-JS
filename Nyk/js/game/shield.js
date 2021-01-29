@@ -52,14 +52,17 @@ class Shield extends GameObject {
 
     }
 
-    checkDelete() {
+    checkDelete(gameObjects) {
         if (this.drawObject.main.drawPoints.length == 0)
             this.toDelete = true;
     }
 
-    update(bullet) {
-        this.checkCollisions(bullet);
+    update(gameObjects) {
+        let player = gameObjects.filter(gameObject => gameObject instanceof Player)
 
+        player[0].getBullets().forEach(bullet => {
+            this.checkCollisions(bullet);
+        })
     }
 
     draw(context) {

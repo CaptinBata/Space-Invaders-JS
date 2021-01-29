@@ -1,6 +1,8 @@
 class Engine {
-    keys = [];
+    static keys = [];
     debug = false;
+    runGame = true;
+    coRoutines = [];
     constructor() {
         this.setupCanvas();
         this.setupEvents();
@@ -13,6 +15,10 @@ class Engine {
 
     start() {
         this.gameLoop();
+    }
+
+    static startCoRoutine(coRoutine) {
+        this.coRoutines.push(coRoutine);
     }
 
     getWindowWidth() {
@@ -31,16 +37,7 @@ class Engine {
 
     drawDebug() {
         if (this.debug) {
-            this.debugObject.drawObjectBounds(this.context, this.game.player)
-
-            this.game.shields.forEach(shield => {
-                this.debugObject.drawObjectBounds(this.context, shield)
-            })
-
-            this.game.aliens.forEach(alien => {
-                this.debugObject.drawObjectBounds(this.context, alien)
-            })
-
+            this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(this.context, gameObject))
             this.debugObject.draw(this.context, this.getWindowWidth(), this.getWindowHeight());
         }
     }
@@ -48,26 +45,35 @@ class Engine {
     update(timestamp) {
         this.game.update();
 
-        // Add Co-Routines here
-
-        this.checkDebug(this.keys);
+        this.checkDebug();
 
         if (this.debug)
             this.debugObject.update(timestamp);
 
-            this.keys = [];
+        Engine.keys = [];
+    }
+
+    executeCoRoutines() {
+        this.coRoutines.forEach(coRoutine => {
+            if (coRoutine.next().done)
+                Utilities.removeElement(this.coRoutines, coRoutine)
+        })
     }
 
     gameLoop(timestamp) { //This is passed in by requestAnimationFrame. Is the time when the frame was called in relation to the start of the execution of the game in milliseconds
-        this.update(timestamp);
+        if (this.runGame) {
+            this.update(timestamp);
 
-        this.draw();
+            this.executeCoRoutines();
 
-        window.requestAnimationFrame(this.gameLoop.bind(this));
+            this.draw();
+
+            window.requestAnimationFrame(this.gameLoop.bind(this));
+        }
     }
 
     checkDebug(keys) {
-        keys.forEach(key => {
+        Engine.keys.forEach(key => {
             switch (key) {
                 case "q":
                     this.debug = !this.debug; //toggle debug mode
@@ -79,7 +85,7 @@ class Engine {
 
     setupEvents() {
         window.addEventListener("keydown", (e) => {
-            this.keys.push(e.key);
+            Engine.keys.push(e.key);
         })
         window.addEventListener("resize", () => {
             this.setupCanvas();
