@@ -6,10 +6,12 @@ class Engine {
     constructor() {
         this.setupCanvas();
         this.setupEvents();
-        this.debugObject = new DebugObject(0, 0, this.playableArea);
+        this.debugObject = new DebugObject(0, 0, Engine.playableArea);
     }
 
     setGame(game) {
+        this.runGame = true;
+
         this.game = game;
     }
 
@@ -17,15 +19,21 @@ class Engine {
         this.gameLoop();
     }
 
+    stop() {
+        this.runGame = false;
+        Engine.coRoutines = [];
+        Engine.keys = [];
+    }
+
     static startCoRoutine(coRoutine) {
         Engine.coRoutines.push(coRoutine);
     }
 
-    getWindowWidth() {
+    static getWindowWidth() {
         return window.innerWidth - 25;
     };
 
-    getWindowHeight() {
+    static getWindowHeight() {
         return window.innerHeight - 25;
     };
 
@@ -37,8 +45,8 @@ class Engine {
 
     drawDebug() {
         if (this.debug) {
-            this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(this.context, gameObject))
-            this.debugObject.draw(this.context, this.getWindowWidth(), this.getWindowHeight());
+            this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(Engine.context, gameObject))
+            this.debugObject.draw(Engine.context, Engine.getWindowWidth(), Engine.getWindowHeight());
         }
     }
 
@@ -56,7 +64,7 @@ class Engine {
     executeCoRoutines() {
         Engine.coRoutines.forEach(coRoutine => {
             if (coRoutine.next().done)
-                Utilities.removeElement(this.coRoutines, coRoutine)
+                Utilities.removeElement(Engine.coRoutines, coRoutine)
         })
     }
 
@@ -77,7 +85,7 @@ class Engine {
             switch (key) {
                 case "q":
                     this.debug = !this.debug; //toggle debug mode
-                    Utilities.removeElement(keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
+                    Utilities.removeElement(Engine.keys, key); //delete the key from the list, so other things can't use it's value. Stops two things from using one press
                     break;
             }
         })
@@ -93,23 +101,23 @@ class Engine {
     }
 
     setupCanvas() {
-        this.canvas = document.getElementById("gameCanvas");
-        this.canvas.width = this.getWindowWidth();
-        this.canvas.height = this.getWindowHeight();
+        Engine.canvas = document.getElementById("gameCanvas");
+        Engine.canvas.width = Engine.getWindowWidth();
+        Engine.canvas.height = Engine.getWindowHeight();
 
-        this.context = this.canvas.getContext("2d");
+        Engine.context = Engine.canvas.getContext("2d");
 
-        this.playableArea = {
-            min: new Vector(this.getWindowWidth() * 0.15, this.getWindowHeight() * 0.10),
-            max: new Vector(this.getWindowWidth() * 0.85, this.getWindowHeight() * 0.90)
+        Engine.playableArea = {
+            min: new Vector(Engine.getWindowWidth() * 0.15, Engine.getWindowHeight() * 0.10),
+            max: new Vector(Engine.getWindowWidth() * 0.85, Engine.getWindowHeight() * 0.90)
         }
 
         this.clearScreen();
     }
 
     clearScreen() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.fillStyle = "#000000";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        Engine.context.clearRect(0, 0, Engine.canvas.width, Engine.canvas.height);
+        Engine.context.fillStyle = "#000000";
+        Engine.context.fillRect(0, 0, Engine.canvas.width, Engine.canvas.height);
     };
 }

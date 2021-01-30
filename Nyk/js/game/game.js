@@ -1,6 +1,6 @@
 class Game extends IGame {
-    constructor(engineRef) {
-        super(engineRef);
+    constructor() {
+        super();
         this.setupGame();
     }
 
@@ -51,8 +51,8 @@ class Game extends IGame {
     }
 
     setupGame() {
-        this.setupPlayer(this.engineRef.playableArea);
-        let alienStartEndPoints = this.setupAliens(this.engineRef.playableArea);
-        this.setupShields(alienStartEndPoints, this.engineRef.playableArea);
+        this.setupPlayer(Engine.playableArea);
+        let alienStartEndPoints = this.setupAliens(Engine.playableArea);
+        this.setupShields(alienStartEndPoints, Engine.playableArea);
     }
 }

@@ -21,6 +21,7 @@
 
   <!-- Load game -->
   <script src="js/startMenu/star.js"></script>
+  <script src="js/startMenu/logo.js"></script>
   <script src="js/startMenu/menu.js"></script>
 
   <!-- Load game -->
@@ -35,7 +36,7 @@
 
   <script>
     let engine = new Engine();
-    engine.setGame(new Menu(engine));
+    engine.setGame(new Menu());
 
     engine.start();
   </script>

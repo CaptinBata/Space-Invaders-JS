@@ -1,7 +1,6 @@
 class IGame {
     gameObjects = [];
-    constructor(engineRef) {
-        this.engineRef = engineRef;
+    constructor() {
     }
 
     checkDelete() {
@@ -21,6 +20,6 @@ class IGame {
     }
 
     draw() {
-        this.gameObjects.forEach(gameObject => gameObject.draw(this.engineRef.context))
+        this.gameObjects.forEach(gameObject => gameObject.draw(Engine.context))
     }
 }

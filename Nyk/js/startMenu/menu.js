@@ -1,10 +1,9 @@
 class Menu extends IGame {
-    constructor(engineRef) {
+    constructor() {
         super();
         this.circlePointCount = 30;
 
-        this.engineRef = engineRef;
-        let playableArea = engineRef.playableArea
+        let playableArea = Engine.playableArea
 
         this.circleCentre = new Vector(playableArea.min.x + ((playableArea.max.x - playableArea.min.x) / 2),
             playableArea.min.y + ((playableArea.max.y - playableArea.min.y) / 2))
@@ -34,11 +33,15 @@ class Menu extends IGame {
     }
 
     *rotateCircle() { //declaration of a generator
-        let circle = this.gameObjects.filter(gameObject => gameObject.type = "Circle")
-
+        let circle = this.filterGameObjects("Circle")
+        let rotation = 0.5;
         while (circle.length > 0) {
+            if (rotation < 1)
+                rotation += 0.01;
+
             circle.forEach(point => {
-                this.rotatePoint(point, 0.5)
+                this.rotatePoint(point, rotation)
+
                 if (point == undefined)
                     Utilities.removeElement(circle, point)
             })
@@ -46,26 +49,68 @@ class Menu extends IGame {
         }
     }
 
+    filterGameObjects(type) {
+        return this.gameObjects.filter(gameObject => gameObject.type == type)
+    }
+
+    generateStars(radius) {
+        for (let i = 0; i < 5; i++) {
+            let colliding = false;
+            let stars = this.filterGameObjects("Star")
+
+            let spawn = new Vector(
+                Utilities.getRandomInt(this.circleCentre.x - radius, this.circleCentre.x + radius),
+                Utilities.getRandomInt(this.circleCentre.y - radius, this.circleCentre.y + radius)
+            )
+            let newStar = new Star("Star", spawn.x, spawn.y, 0, 0)
+
+            stars.forEach(star => {
+                if (star.detectAABBCollision(newStar))
+                    colliding = true;
+            })
+
+            if (!colliding)
+                this.gameObjects.push(newStar);
+        }
+    }
+
     *changeRadius() { //declaration of a generator
-        let circle = this.gameObjects.filter(gameObject => gameObject.type = "Circle")
+        let circle = this.filterGameObjects("Circle")
         let increase = false
+        let currentRadius = 0;
         while (circle.length > 0) {
             circle.forEach(point => {
                 if (point.radius > 15 && !increase)
-                    point.radius -= 0.25;
+                    point.radius -= 1;
                 else {
-                    point.radius += 2;
+                    point.radius += 10;
                     increase = true;
                 }
+                currentRadius = point.radius;
 
                 let newPoint = this.generatePoint(point.rotation, point.radius);
                 point.position = new Vector(this.circleCentre.x + newPoint.x, this.circleCentre.y + newPoint.y);
 
-                if (point == undefined)
+                if (point.position.x > Engine.getWindowWidth()
+                    || point.position.y > Engine.getWindowHeight()
+                    || point.position.x < 0
+                    || point.position.y < 0) {
+                    point.toDelete = true;
                     Utilities.removeElement(circle, point)
+                }
             })
+            if (increase)
+                this.generateStars(currentRadius);
+
             yield null;
         }
+
+        let direction = new Vector(Utilities.getRandomInt(-5, -3), Utilities.getRandomInt(3, 5))
+        this.filterGameObjects("Star").forEach(star => {
+            star.direction = direction;
+            star.setMove(true);
+        })
+        this.gameObjects.push(new Logo(Engine.playableArea.min.x, Engine.playableArea.min.y, "assets/logo.png"))
     }
 
     rotatePoint(point, angle) {
