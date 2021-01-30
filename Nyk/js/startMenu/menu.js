@@ -46,11 +46,15 @@ class Menu extends IGame {
 
     *changeRadius() { //declaration of a generator
         let circle = this.gameObjects.filter(gameObject => gameObject.type = "Circle")
-
+        let increase = false
         while (true) {
             circle.forEach(point => {
-                if (point.radius > 20)
-                    point.radius -= 0.5;
+                if (point.radius > 20 && !increase)
+                    point.radius -= 0.25;
+                else {
+                    point.radius += 1;
+                    increase = true;
+                }
 
                 let newPoint = this.generatePoint(point.rotation, point.radius);
                 point.position = new Vector(this.circleCentre.x + newPoint.x, this.circleCentre.y + newPoint.y);
