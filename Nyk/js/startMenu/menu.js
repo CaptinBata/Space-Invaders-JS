@@ -36,9 +36,11 @@ class Menu extends IGame {
     *rotateCircle() { //declaration of a generator
         let circle = this.gameObjects.filter(gameObject => gameObject.type = "Circle")
 
-        while (true) {
+        while (circle.length > 0) {
             circle.forEach(point => {
                 this.rotatePoint(point, 0.5)
+                if (point == undefined)
+                    Utilities.removeElement(circle, point)
             })
             yield null;
         }
@@ -47,17 +49,20 @@ class Menu extends IGame {
     *changeRadius() { //declaration of a generator
         let circle = this.gameObjects.filter(gameObject => gameObject.type = "Circle")
         let increase = false
-        while (true) {
+        while (circle.length > 0) {
             circle.forEach(point => {
-                if (point.radius > 20 && !increase)
+                if (point.radius > 15 && !increase)
                     point.radius -= 0.25;
                 else {
-                    point.radius += 1;
+                    point.radius += 2;
                     increase = true;
                 }
 
                 let newPoint = this.generatePoint(point.rotation, point.radius);
                 point.position = new Vector(this.circleCentre.x + newPoint.x, this.circleCentre.y + newPoint.y);
+
+                if (point == undefined)
+                    Utilities.removeElement(circle, point)
             })
             yield null;
         }
