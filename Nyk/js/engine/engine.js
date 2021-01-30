@@ -2,7 +2,7 @@ class Engine {
     static keys = [];
     debug = false;
     runGame = true;
-    coRoutines = [];
+    static coRoutines = [];
     constructor() {
         this.setupCanvas();
         this.setupEvents();
@@ -18,7 +18,7 @@ class Engine {
     }
 
     static startCoRoutine(coRoutine) {
-        this.coRoutines.push(coRoutine);
+        Engine.coRoutines.push(coRoutine);
     }
 
     getWindowWidth() {
@@ -54,7 +54,7 @@ class Engine {
     }
 
     executeCoRoutines() {
-        this.coRoutines.forEach(coRoutine => {
+        Engine.coRoutines.forEach(coRoutine => {
             if (coRoutine.next().done)
                 Utilities.removeElement(this.coRoutines, coRoutine)
         })

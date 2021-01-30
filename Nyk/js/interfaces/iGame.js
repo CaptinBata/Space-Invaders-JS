@@ -1,13 +1,26 @@
 class IGame {
-    constructor() {
-        return null;
+    gameObjects = [];
+    constructor(engineRef) {
+        this.engineRef = engineRef;
+    }
+
+    checkDelete() {
+        this.gameObjects.forEach(gameObject => {
+            gameObject.checkDelete(this.gameObjects);
+            if (gameObject.toDelete)
+                Utilities.removeElement(this.gameObjects, gameObject);
+        })
     }
 
     update() {
-        return null
+        this.gameObjects.forEach(gameObject => {
+            gameObject.update(this.gameObjects)
+        })
+
+        this.checkDelete();
     }
 
     draw() {
-        return null
+        this.gameObjects.forEach(gameObject => gameObject.draw(this.engineRef.context))
     }
 }

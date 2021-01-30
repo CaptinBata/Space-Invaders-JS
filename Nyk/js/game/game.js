@@ -1,8 +1,6 @@
 class Game extends IGame {
     constructor(engineRef) {
-        super();
-        this.engineRef = engineRef
-        this.gameObjects = [];
+        super(engineRef);
         this.setupGame();
     }
 
@@ -56,25 +54,5 @@ class Game extends IGame {
         this.setupPlayer(this.engineRef.playableArea);
         let alienStartEndPoints = this.setupAliens(this.engineRef.playableArea);
         this.setupShields(alienStartEndPoints, this.engineRef.playableArea);
-    }
-
-    checkDelete() {
-        this.gameObjects.forEach(gameObject => {
-            gameObject.checkDelete(this.gameObjects);
-            if (gameObject.toDelete)
-                Utilities.removeElement(this.gameObjects, gameObject);
-        })
-    }
-
-    update() {
-        this.gameObjects.forEach(gameObject => {
-            gameObject.update(this.gameObjects)
-        })
-
-        this.checkDelete();
-    }
-
-    draw() {
-        this.gameObjects.forEach(gameObject => gameObject.draw(this.engineRef.context))
     }
 }

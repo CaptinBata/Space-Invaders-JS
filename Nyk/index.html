@@ -17,6 +17,11 @@
   <script src="js/engine/gameObject.js"></script>
   <script src="js/engine/debugObject.js"></script>
   <script src="js/engine/vector.js"></script>
+  <script src="js/interfaces/iGame.js"></script>
+
+  <!-- Load game -->
+  <script src="js/startMenu/star.js"></script>
+  <script src="js/startMenu/menu.js"></script>
 
   <!-- Load game -->
   <script src="js/game/bullet.js"></script>
@@ -26,12 +31,11 @@
   <script src="js/game/alien.js"></script>
   <script src="js/game/player.js"></script>
   <script src="js/game/shield.js"></script>
-  <script src="js/interfaces/iGame.js"></script>
   <script src="js/game/game.js"></script>
 
   <script>
     let engine = new Engine();
-    engine.setGame(new Game(engine))
+    engine.setGame(new Menu(engine));
 
     engine.start();
   </script>
