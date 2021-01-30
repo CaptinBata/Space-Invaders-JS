@@ -42,7 +42,7 @@ class Menu extends IGame {
             circle.forEach(point => {
                 this.rotatePoint(point, rotation)
 
-                if (point == undefined)
+                if (point.toDelete)
                     Utilities.removeElement(circle, point)
             })
             yield null;
@@ -105,7 +105,7 @@ class Menu extends IGame {
             yield null;
         }
 
-        let direction = new Vector(Utilities.getRandomInt(-5, -3), Utilities.getRandomInt(3, 5))
+        let direction = new Vector(Utilities.getRandomInt(-4, -2), Utilities.getRandomInt(2, 4))
         this.filterGameObjects("Star").forEach(star => {
             star.direction = direction;
             star.setMove(true);
