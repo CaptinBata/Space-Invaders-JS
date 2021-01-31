@@ -104,7 +104,10 @@ class Menu extends IGame {
 
             yield null;
         }
+        this.spawnLogo();
+    }
 
+    spawnLogo() {
         let direction = new Vector(Utilities.getRandomInt(-4, -2), Utilities.getRandomInt(2, 4))
         this.filterGameObjects("Star").forEach(star => {
             star.direction = direction;
