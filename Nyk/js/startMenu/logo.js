@@ -10,7 +10,9 @@ class Logo extends GameObject {
             playableAreaDiffY
         );
         this.image.src = filePath;
-        this.image.style.opacity = 0;
+        this.opacity = 0;
+
+        this.transitionRate = 3 / (3 * Engine.fps); // 3 seconds / (Amount of frames in 3 seconds)
 
         this.setDrawObject({
             "main": {
@@ -23,12 +25,20 @@ class Logo extends GameObject {
         })
     }
 
+    setImageOpacity() {
+        this.image.setAttribute("style", `opacity:${this.opacity}; -moz-opacity:${this.opacity}; filter:alpha(opacity=${this.opacity})`)
+    }
+
     update(gameObjects) {
-        if (this.image.style.opacity < 1)
-            this.image.style.opacity += 0.001;
+        if (this.opacity < 1) {
+            this.opacity += this.transitionRate;
+        }
     }
 
     draw(context) {
+        context.save();
+        context.globalAlpha = this.opacity;
         context.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
+        context.restore();
     }
 }

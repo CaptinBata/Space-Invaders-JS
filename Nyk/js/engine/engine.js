@@ -2,6 +2,7 @@ class Engine {
     static keys = [];
     debug = false;
     runGame = true;
+    static fps = 0;
     static coRoutines = [];
     constructor() {
         this.setupCanvas();
@@ -55,8 +56,9 @@ class Engine {
 
         this.checkDebug();
 
-        if (this.debug)
-            this.debugObject.update(timestamp);
+        this.debugObject.update(timestamp);
+
+        Engine.fps = this.debugObject.getFPS();
 
         Engine.keys = [];
     }

@@ -69,6 +69,10 @@ class DebugObject extends GameObject {
         })
     }
 
+    getFPS() {
+        return this.fps;
+    }
+
     update(timestamp) {
         if (this.lastTime != null) {
             let timeTaken = timestamp - this.lastTime;
