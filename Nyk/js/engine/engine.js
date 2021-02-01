@@ -82,7 +82,7 @@ class Engine {
         }
     }
 
-    checkDebug(keys) {
+    checkDebug() {
         Engine.keys.forEach(key => {
             switch (key) {
                 case "q":
