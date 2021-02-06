@@ -46,8 +46,8 @@ class Engine {
 
     drawDebug() {
         if (this.debug) {
-            this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(Engine.context, gameObject))
-            this.debugObject.draw(Engine.context, Engine.getWindowWidth(), Engine.getWindowHeight());
+            this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(gameObject))
+            this.debugObject.draw(Engine.getWindowWidth(), Engine.getWindowHeight());
         }
     }
 

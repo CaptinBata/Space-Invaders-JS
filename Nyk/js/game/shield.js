@@ -65,7 +65,7 @@ class Shield extends GameObject {
         })
     }
 
-    draw(context) {
-        this.drawByPixel(context);
+    draw() {
+        this.drawByPixel();
     }
 }

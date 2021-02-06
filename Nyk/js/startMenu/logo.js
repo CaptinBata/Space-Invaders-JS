@@ -35,10 +35,10 @@ class Logo extends GameObject {
         }
     }
 
-    draw(context) {
-        context.save();
-        context.globalAlpha = this.opacity;
-        context.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
-        context.restore();
+    draw() {
+        Engine.context.save();
+        Engine.context.globalAlpha = this.opacity;
+        Engine.context.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
+        Engine.context.restore();
     }
 }

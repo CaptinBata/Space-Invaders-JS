@@ -63,10 +63,10 @@ class Player extends GameObject {
         })
     }
 
-    draw(context) {
+    draw() {
         this.bullets.forEach(bullet => { // Bullets draw first so we can hide it spawning behind the player. This make it look like it comes out of the gun
-            bullet.draw(context)
+            bullet.draw()
         })
-        this.drawByLine(context);
+        this.drawByLine();
     }
 }

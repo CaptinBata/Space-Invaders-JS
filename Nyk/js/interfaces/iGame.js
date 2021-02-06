@@ -20,6 +20,6 @@ class IGame {
     }
 
     draw() {
-        this.gameObjects.forEach(gameObject => gameObject.draw(Engine.context))
+        this.gameObjects.forEach(gameObject => gameObject.draw())
     }
 }

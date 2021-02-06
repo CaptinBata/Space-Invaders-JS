@@ -107,8 +107,8 @@ class GameObject {
         this.assignTotalObjectBounds();
     }
 
-    draw(context) {
-        this.drawByLine(context);
+    draw() {
+        this.drawByLine();
     }
 
     toGlobalCoords(localVector) {
@@ -123,45 +123,45 @@ class GameObject {
         return this.getMinMax().max.y - this.getMinMax().min.y
     }
 
-    drawByLine(context) {
+    drawByLine() {
         Object.values(this.drawObject).forEach(drawable => {
-            context.beginPath();
-            context.moveTo(this.toGlobalCoords(drawable.drawPoints[0]).x, this.toGlobalCoords(drawable.drawPoints[0]).y);
+            Engine.context.beginPath();
+            Engine.context.moveTo(this.toGlobalCoords(drawable.drawPoints[0]).x, this.toGlobalCoords(drawable.drawPoints[0]).y);
 
             drawable.drawPoints.forEach(drawPoint => {
                 if (drawPoint != drawable.drawPoints[0]) {
                     let drawPointGlobal = this.toGlobalCoords(drawPoint);
-                    context.lineTo(drawPointGlobal.x, drawPointGlobal.y)
+                    Engine.context.lineTo(drawPointGlobal.x, drawPointGlobal.y)
                 }
             });
 
-            context.closePath();
-            this.setDrawModes(context, drawable.strokeColour, drawable.fillColour);
+            Engine.context.closePath();
+            this.setDrawModes(drawable.strokeColour, drawable.fillColour);
         });
     }
 
-    drawByPixel(context) {
+    drawByPixel() {
         Object.values(this.drawObject).forEach(drawable => {
-            context.beginPath();
+            Engine.context.beginPath();
 
             drawable.drawPoints.forEach(drawPoint => {
                 let drawPointGlobal = this.toGlobalCoords(drawPoint);
-                context.rect(drawPointGlobal.x, drawPointGlobal.y, 1, 1);
+                Engine.context.rect(drawPointGlobal.x, drawPointGlobal.y, 1, 1);
             });
 
-            context.closePath();
-            this.setDrawModes(context, drawable.strokeColour, drawable.fillColour);
+            Engine.context.closePath();
+            this.setDrawModes( drawable.strokeColour, drawable.fillColour);
         });
     }
 
-    setDrawModes(context, strokeStyle, fillStyle) {
+    setDrawModes( strokeStyle, fillStyle) {
         if (strokeStyle != "" || undefined) {
-            context.strokeStyle = strokeStyle
-            context.stroke();
+            Engine.context.strokeStyle = strokeStyle
+            Engine.context.stroke();
         }
         if (fillStyle != "" || undefined) {
-            context.fillStyle = fillStyle
-            context.fill();
+            Engine.context.fillStyle = fillStyle
+            Engine.context.fill();
         }
     }
 }

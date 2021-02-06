@@ -35,9 +35,15 @@ class Menu extends IGame {
     *rotateCircle() { //declaration of a generator
         let circle = this.filterGameObjects("Circle")
         let rotation = 0.5;
+
+        yield null;
+        yield null; //We want to skip some frames to the fps of the game can be calculated.
+
+        let rotationAmount = 1.44 / Engine.fps;
+        console.log(rotationAmount)
         while (circle.length > 0) {
             if (rotation < 1)
-                rotation += 0.01;
+                rotation += rotationAmount;
 
             circle.forEach(point => {
                 this.rotatePoint(point, rotation)
