@@ -38,6 +38,15 @@ class Engine {
         return window.innerHeight - 25;
     };
 
+    static setGlobalAlpha(value){
+        Engine.context.save();
+        Engine.context.globalAlpha = value;
+    }
+
+    static restoreGlobalAlpha(){
+        Engine.context.restore();
+    }
+
     draw() {
         this.clearScreen();
         this.game.draw();
@@ -116,6 +125,7 @@ class Engine {
 
         this.clearScreen();
     }
+
 
     clearScreen() {
         Engine.context.clearRect(0, 0, Engine.canvas.width, Engine.canvas.height);

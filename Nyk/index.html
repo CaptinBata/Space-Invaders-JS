@@ -1,4 +1,11 @@
 <html>
+  <head>
+    <style>
+      .button {
+        background-color: #ffe213;
+      }
+    </style>
+  </head>
   <meta charset="utf-8" />
   <body>
     <canvas
@@ -9,6 +16,9 @@
     >
       Your browser does not support the canvas element.
     </canvas>
+    <button type="button" id="startGame" class="button" onclick="startGame()">
+      Start Game!
+    </button>
   </body>
 
   <!-- Load engine -->
@@ -39,5 +49,9 @@
     engine.setGame(new Menu());
 
     engine.start();
+
+    function startGame() {
+      console.log("Pressed!");
+    }
   </script>
 </html>

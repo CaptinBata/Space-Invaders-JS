@@ -19,14 +19,10 @@ class Logo extends GameObject {
                 "drawPoints": [
                     new Vector(0, 0),
                 ],
-                "fillColour": "#ffffff",
-                "strokeColour": "#ffffff",
+                "fillColour": "#000000",
+                "strokeColour": "#000000",
             }
         })
-    }
-
-    setImageOpacity() {
-        this.image.setAttribute("style", `opacity:${this.opacity}; -moz-opacity:${this.opacity}; filter:alpha(opacity=${this.opacity})`)
     }
 
     update(gameObjects) {
@@ -36,9 +32,8 @@ class Logo extends GameObject {
     }
 
     draw() {
-        Engine.context.save();
-        Engine.context.globalAlpha = this.opacity;
+        Engine.setGlobalAlpha(this.opacity);
         Engine.context.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height);
-        Engine.context.restore();
+        Engine.restoreGlobalAlpha();
     }
 }

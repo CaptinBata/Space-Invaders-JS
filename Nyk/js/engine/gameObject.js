@@ -150,11 +150,11 @@ class GameObject {
             });
 
             Engine.context.closePath();
-            this.setDrawModes( drawable.strokeColour, drawable.fillColour);
+            this.setDrawModes(drawable.strokeColour, drawable.fillColour);
         });
     }
 
-    setDrawModes( strokeStyle, fillStyle) {
+    setDrawModes(strokeStyle, fillStyle) {
         if (strokeStyle != "" || undefined) {
             Engine.context.strokeStyle = strokeStyle
             Engine.context.stroke();
