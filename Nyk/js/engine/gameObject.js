@@ -7,6 +7,12 @@ class GameObject {
         this.position = new Vector(x, y);
     }
 
+    destructor() {
+        delete this.drawObject;
+        delete this.position;
+        delete this.minMax;
+    }
+
     setDrawObject(drawObject) {
         this.drawObject = drawObject;
         this.getObjectBounds();

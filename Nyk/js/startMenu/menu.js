@@ -13,6 +13,12 @@ class Menu extends IGame {
         Engine.startCoRoutine(this.changeRadius());
     }
 
+    destructor() {
+        IGame.prototype.destructor.call(this) //call the parent destructor first, then do some extra shit for this class
+        delete this.circleCentre;
+        delete this.circlePointCount;
+    }
+
     generateCircle(radius, pointCount) {
         this.incDegrees = 360 / pointCount;
 

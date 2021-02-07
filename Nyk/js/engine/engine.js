@@ -2,6 +2,7 @@ class Engine {
     static keys = [];
     debug = false;
     runGame = true;
+    frameId = 0;
     static fps = 0;
     static coRoutines = [];
     constructor() {
@@ -21,9 +22,14 @@ class Engine {
     }
 
     stop() {
+        window.cancelAnimationFrame(this.frameId);
+
         this.runGame = false;
         Engine.coRoutines = [];
         Engine.keys = [];
+
+        this.game.destructor();
+        delete this.game;
     }
 
     static startCoRoutine(coRoutine) {
@@ -38,12 +44,12 @@ class Engine {
         return window.innerHeight - 25;
     };
 
-    static setGlobalAlpha(value){
+    static setGlobalAlpha(value) {
         Engine.context.save();
         Engine.context.globalAlpha = value;
     }
 
-    static restoreGlobalAlpha(){
+    static restoreGlobalAlpha() {
         Engine.context.restore();
     }
 
@@ -87,7 +93,7 @@ class Engine {
 
             this.draw();
 
-            window.requestAnimationFrame(this.gameLoop.bind(this));
+            this.frameId = window.requestAnimationFrame(this.gameLoop.bind(this));
         }
     }
 

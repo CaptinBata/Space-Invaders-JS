@@ -3,6 +3,13 @@ class IGame {
     constructor() {
     }
 
+    destructor() {
+        this.gameObjects.forEach(gameObject => {
+            gameObject.destructor();
+        })
+        this.gameObjects = [];
+    }
+
     checkDelete() {
         this.gameObjects.forEach(gameObject => {
             gameObject.checkDelete(this.gameObjects);
