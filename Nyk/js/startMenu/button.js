@@ -9,7 +9,7 @@ class Button extends GameObject {
         let halfXPoint = Engine.getWindowWidth() / 2;
 
         x = halfXPoint - (width / 2);
-        y = Engine.playableArea.min.y - (height + 10);
+        y = Engine.playableArea.min.y - (height + height * .625);
 
         this.position = new Vector(x, y);
 
