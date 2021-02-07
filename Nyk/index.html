@@ -3,6 +3,14 @@
     <style>
       .button {
         background-color: #ffe213;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        opacity: 0;
+      }
+      #gameCanvas {
+        height: 100%;
+        width: 100%;
       }
     </style>
   </head>
@@ -12,11 +20,17 @@
       id="gameCanvas"
       width="200"
       height="100"
-      style="border: 1px solid #000000"
+      style="border: 1px solid #000000; z-index: -1"
     >
       Your browser does not support the canvas element.
     </canvas>
-    <button type="button" id="startGame" class="button" onclick="startGame()">
+    <button
+      type="button"
+      id="startGame"
+      class="button"
+      style="z-index: 1"
+      onclick="startGame()"
+    >
       Start Game!
     </button>
   </body>
@@ -32,6 +46,7 @@
   <!-- Load game -->
   <script src="js/startMenu/star.js"></script>
   <script src="js/startMenu/logo.js"></script>
+  <script src="js/startMenu/button.js"></script>
   <script src="js/startMenu/menu.js"></script>
 
   <!-- Load game -->

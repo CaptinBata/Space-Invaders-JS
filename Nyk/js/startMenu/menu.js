@@ -119,7 +119,9 @@ class Menu extends IGame {
             star.direction = direction;
             star.setMove(true);
         })
+
         this.gameObjects.push(new Logo(Engine.playableArea.min.x, Engine.playableArea.min.y, "assets/logo.png"))
+        this.gameObjects.push(new Button(100, 100, "startGame"))
     }
 
     rotatePoint(point, angle) {
