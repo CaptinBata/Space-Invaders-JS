@@ -1,8 +1,8 @@
 class Game extends IGame {
     constructor() {
         super();
-        this.setupGame();
         this.running = true;
+        this.setupGame();
     }
 
     setupPlayer(playableArea) {

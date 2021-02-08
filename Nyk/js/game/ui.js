@@ -3,16 +3,12 @@ class UI extends GameObject {
     constructor(x, y, gameObjects, runState) {
         super(x, y);
         this.musicBeats = [
-            new Audio("assets/music/Music_1.wav"),
-            new Audio("assets/music/Music_2.wav"),
-            new Audio("assets/music/Music_3.wav"),
-            new Audio("assets/music/Music_4.wav")
+            new Audio("assets/music/Music_1.ogg"),
+            new Audio("assets/music/Music_2.ogg"),
+            new Audio("assets/music/Music_3.ogg"),
+            new Audio("assets/music/Music_4.ogg")
         ];
         this.score = 0;
-
-        this.musicBeats.forEach(beat => {
-            beat.c
-        });
 
         this.runState = runState;
         Engine.startCoRoutine(this.playMusic(gameObjects));
@@ -30,18 +26,21 @@ class UI extends GameObject {
 
     *playMusic(gameObjects) {
         let songSpeed = 0.8; //The amount of time between each note of the music in the og game
-        let aliens = gameObjects.find(gameObject => gameObject instanceof Alien);
+        let fastestDiff = 0.1;
+        let aliens = gameObjects.filter(gameObject => gameObject instanceof Alien);
         let songDifference = 0.8 / aliens.length;
-        let timestamp = Date.now();
+        let timestamp = Date.now() / 1000;
         let musicCount = 0;
 
         while (this.runState) {
-            let now = Date.now()
+            let now = Date.now() / 1000;
             let timetaken = now - timestamp;
 
-            aliens = gameObjects.find(gameObject => gameObject instanceof Alien);
+            aliens = gameObjects.filter(gameObject => gameObject instanceof Alien);
 
-            if (timetaken >= aliens.length * songDifference) {
+            let soundDiff = aliens.length * songDifference > fastestDiff ? aliens.length * songDifference : fastestDiff;
+
+            if (timetaken >= soundDiff) {
                 this.musicBeats[musicCount].play();
                 musicCount++;
 
