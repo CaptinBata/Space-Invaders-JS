@@ -1,4 +1,4 @@
-class Button extends GameObject {
+class Button extends opacityAnimationObject {
     constructor(x, y, id) {
         super(x, y);
 
@@ -37,9 +37,7 @@ class Button extends GameObject {
     }
 
     update(gameObjects) {
-        if (this.opacity < 1) {
-            this.opacity += this.transitionRate;
-            this.startButton.style.opacity = this.opacity;
-        }
+        opacityAnimationObject.prototype.update.call(this);
+        this.startButton.style.opacity = this.opacity;
     }
 }

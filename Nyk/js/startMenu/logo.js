@@ -1,4 +1,4 @@
-class Logo extends GameObject {
+class Logo extends opacityAnimationObject {
     constructor(x, y, filePath) {
         super(x, y)
         let playableAreaDiffX = Engine.playableArea.max.x - Engine.playableArea.min.x
@@ -28,12 +28,6 @@ class Logo extends GameObject {
     destructor() {
         GameObject.prototype.destructor.call(this) //call the parent destructor first, then do some extra shit for this class
         delete this.image;
-    }
-
-    update(gameObjects) {
-        if (this.opacity < 1) {
-            this.opacity += this.transitionRate;
-        }
     }
 
     draw() {

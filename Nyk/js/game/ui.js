@@ -38,7 +38,8 @@ class UI extends GameObject {
 
             aliens = gameObjects.filter(gameObject => gameObject instanceof Alien);
 
-            let soundDiff = aliens.length * songDifference > fastestDiff ? aliens.length * songDifference : fastestDiff;
+            let songGap = aliens.length * songDifference
+            let soundDiff = songGap > fastestDiff ? songGap : fastestDiff;
 
             if (timetaken >= soundDiff) {
                 this.musicBeats[musicCount].play();
