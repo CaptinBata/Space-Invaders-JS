@@ -1,8 +1,13 @@
 class Game extends IGame {
     constructor() {
         super();
+
         this.running = true;
+        this.lives = 3;
+        this.score = 0;
+
         this.setupGame();
+
     }
 
     setupPlayer(playableArea) {
@@ -55,6 +60,7 @@ class Game extends IGame {
         this.setupPlayer(Engine.playableArea);
         let alienStartEndPoints = this.setupAliens(Engine.playableArea);
         this.setupShields(alienStartEndPoints, Engine.playableArea);
-        this.gameObjects.push(new UI(0, 0, this.gameObjects, this.running))
+
+        this.gameObjects.push(new UI(0, Engine.getWindowHeight(), this.gameObjects, this.running, this.score, this.lives))
     }
 }

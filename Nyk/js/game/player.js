@@ -3,21 +3,7 @@ class Player extends GameObject {
     constructor(x, y) {
         super(x, y)
         this.setDrawObject({
-            "main": {
-                "drawPoints": [
-                    new Vector(-30, 15),
-                    new Vector(-30, -15),
-                    new Vector(-2.5, -15),
-                    new Vector(-2.5, -25),
-                    new Vector(2.5, -25),
-                    new Vector(2.5, -15),
-                    new Vector(30, -15),
-                    new Vector(30, 15),
-                    new Vector(-30, 15),
-                ],
-                "fillColour": "#ffffff",
-                "strokeColour": "#ffffff",
-            }
+            "main": player
         })
 
     }

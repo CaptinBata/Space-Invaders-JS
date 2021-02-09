@@ -1,6 +1,6 @@
 class UI extends GameObject {
     //time between noises 0.8 seconds
-    constructor(x, y, gameObjects, runState) {
+    constructor(x, y, gameObjects, runState, score, lives) {
         super(x, y);
         this.musicBeats = [
             new Audio("assets/music/Music_1.ogg"),
@@ -8,10 +8,14 @@ class UI extends GameObject {
             new Audio("assets/music/Music_3.ogg"),
             new Audio("assets/music/Music_4.ogg")
         ];
-        this.score = 0;
 
+        this.score = score;
+        this.lives = lives;
         this.runState = runState;
+
         Engine.startCoRoutine(this.playMusic(gameObjects));
+
+        //make player objects here for drawing lives
 
         this.setDrawObject({
             "main": {
@@ -26,7 +30,7 @@ class UI extends GameObject {
 
     *playMusic(gameObjects) {
         let songSpeed = 0.8; //The amount of time between each note of the music in the og game
-        let fastestDiff = 0.1;
+        let fastestDiff = 0.09;
         let aliens = gameObjects.filter(gameObject => gameObject instanceof Alien);
         let songDifference = 0.8 / aliens.length;
         let timestamp = Date.now() / 1000;
