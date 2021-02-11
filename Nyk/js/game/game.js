@@ -3,8 +3,6 @@ class Game extends IGame {
         super();
 
         this.running = true;
-        this.lives = 3;
-        this.score = 0;
 
         this.setupGame();
 
@@ -44,14 +42,8 @@ class Game extends IGame {
 
     update() {
         this.gameObjects.forEach(gameObject => {
-            if (gameObject instanceof UI)
-                gameObject.update(this.score, this.lives, this.running)
-            else
-                gameObject.update(this.gameObjects)
-
+            gameObject.update(this.gameObjects)
             gameObject.checkDelete(this.gameObjects);
-
-            gameObject instanceof Alien && gameObject.toDelete ? this.score += gameObject.pointValue : this.score += 0
         })
 
         this.checkDelete();
@@ -72,6 +64,6 @@ class Game extends IGame {
         let alienStartEndPoints = this.setupAliens(Engine.playableArea);
         this.setupShields(alienStartEndPoints, Engine.playableArea);
 
-        this.gameObjects.push(new UI(0, Engine.getWindowHeight(), this.gameObjects, this.running, this.score, this.lives))
+        this.gameObjects.push(new UI(0, Engine.getWindowHeight(), this.gameObjects, this.running))
     }
 }

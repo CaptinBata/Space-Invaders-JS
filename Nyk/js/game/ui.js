@@ -1,6 +1,6 @@
 class UI extends GameObject {
     //time between noises 0.8 seconds
-    constructor(x, y, gameObjects, runState, score, lives) {
+    constructor(x, y, gameObjects, runState) {
         super(x, y);
         this.musicBeats = [
             new Audio("assets/music/Music_1.ogg"),
@@ -9,8 +9,8 @@ class UI extends GameObject {
             new Audio("assets/music/Music_4.ogg")
         ];
 
-        this.score = score;
-        this.lives = lives;
+        this.score = 0;
+        this.lives = 3;
         this.runState = runState;
 
         Engine.startCoRoutine(this.playMusic(gameObjects));
@@ -36,15 +36,16 @@ class UI extends GameObject {
         Engine.context.fillText(`Score: ${this.score}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.05);
     }
 
-    update(score, lives, running) {
-        this.score = score;
-        this.lives = lives;
-        this.running = running;
+    update(gameObjects) {
+        gameObjects.filter(gameObject => gameObject instanceof Alien).forEach(alien => {
+            if (alien.toDelete)
+                this.score += alien.pointValue;
+        })
     }
 
     *playMusic(gameObjects) {
         let songSpeed = 0.8; //The amount of time between each note of the music in the og game
-        let fastestDiff = 0.09;
+        let fastestDiff = 0.09; //The smallest amount of time between each note, before it sounds garbo.
         let aliens = gameObjects.filter(gameObject => gameObject instanceof Alien);
         let songDifference = 0.8 / aliens.length;
         let timestamp = Date.now() / 1000;
