@@ -52,7 +52,8 @@ class Menu extends IGame {
                 rotation += rotationAmount;
 
             circle.forEach(point => {
-                this.rotatePoint(point, rotation)
+                point.rotateAroundPoint(this.circleCentre, rotation)
+                point.rotation += rotation;
 
                 if (point.toDelete)
                     Utilities.removeElement(circle, point)
@@ -129,23 +130,4 @@ class Menu extends IGame {
         this.gameObjects.push(new Logo(Engine.playableArea.min.x, Engine.playableArea.min.y, "assets/logo.png"))
         this.gameObjects.push(new Button(100, 100, "startGame"))
     }
-
-    rotatePoint(point, angle) {
-        let radians = angle * (Math.PI / 180);
-
-        let sine = Math.sin(radians);
-        let cosine = Math.cos(radians);
-
-        point.position.x -= this.circleCentre.x;
-        point.position.y -= this.circleCentre.y;
-
-        let newX = point.position.x * cosine - point.position.y * sine;
-        let newY = point.position.x * sine + point.position.y * cosine;
-
-        point.position.x = newX + this.circleCentre.x
-        point.position.y = newY + this.circleCentre.y;
-
-        point.rotation += angle;
-    }
-
 }

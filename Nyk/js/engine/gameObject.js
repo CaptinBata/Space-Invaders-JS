@@ -85,6 +85,14 @@ class GameObject {
         })
     }
 
+    rotateAroundPoint(point, angle) {
+        this.position = Vector.rotateVectorAroundPoint(this.position, point, angle)
+    }
+
+    translatePosition(otherVector) {
+        this.position = Vector.translate(this.position, otherVector);
+    }
+
     assignTotalObjectBounds() {
         let min = new Vector(1000000, 1000000);
         let max = new Vector(-1000000, -1000000);
