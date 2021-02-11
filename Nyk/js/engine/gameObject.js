@@ -18,10 +18,6 @@ class GameObject {
         this.getObjectBounds();
     }
 
-    resetPositionForScaleChange() {
-
-    }
-
     getMinMax() {
         return this.minMax;
     }

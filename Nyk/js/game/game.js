@@ -4,6 +4,7 @@ class Game extends IGame {
 
         this.running = true;
         this.lives = 3;
+        this.score = 0;
 
         this.setupGame();
 
@@ -39,6 +40,17 @@ class Game extends IGame {
         }
 
         return { startPos: alienStartXPoint, endPos: alienEndXPoint }
+    }
+
+    update() {
+        this.gameObjects.forEach(gameObject => {
+            gameObject.update(this.gameObjects)
+            gameObject.checkDelete(this.gameObjects);
+
+            gameObject instanceof Alien && gameObject.toDelete ? this.score += gameObject.pointValue : this.score += 0
+        })
+
+        this.checkDelete();
     }
 
     setupShields(alienStartEndPoints, playableArea) {
