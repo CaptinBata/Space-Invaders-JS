@@ -1,4 +1,4 @@
-player = {
+playerStructure = {
     "drawPoints": [
         new Vector(-30, 15),
         new Vector(-30, -15),

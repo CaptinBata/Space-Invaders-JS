@@ -62,7 +62,7 @@ class Engine {
     drawDebug() {
         if (this.debug) {
             this.game.gameObjects.forEach(gameObject => this.debugObject.drawObjectBounds(gameObject))
-            this.debugObject.draw(Engine.getWindowWidth(), Engine.getWindowHeight());
+            this.debugObject.draw();
         }
     }
 
@@ -114,6 +114,7 @@ class Engine {
         })
         window.addEventListener("resize", () => {
             this.setupCanvas();
+            this.game.gameObjects.forEach(gameObject => gameObject.resetPositionForScaleChange())
         })
     }
 

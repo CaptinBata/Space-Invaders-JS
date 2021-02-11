@@ -3,7 +3,7 @@ class Player extends GameObject {
     constructor(x, y) {
         super(x, y)
         this.setDrawObject({
-            "main": player
+            "main": playerStructure
         })
 
     }

@@ -1,5 +1,6 @@
 class Alien extends GameObject {
     bullets = [];
+    pointValue = 0;
     constructor(x, y, alienIndex) {
         super(x, y)
         this.setAlienShape(alienIndex);
@@ -9,15 +10,19 @@ class Alien extends GameObject {
         switch (alienIndex) {
             case 0:
                 this.setDrawObject(alienStructureOne)
+                this.pointValue = 30;
                 break;
             case 1:
                 this.setDrawObject(alienStructureTwo)
+                this.pointValue = 20;
                 break;
             case 2:
                 this.setDrawObject(alienStructureThree)
+                this.pointValue = 10;
                 break;
             default:
                 this.setDrawObject(alienStructureOne)
+                this.pointValue = 10;
                 break;
         }
     }

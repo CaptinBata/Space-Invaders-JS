@@ -15,17 +15,56 @@ class UI extends GameObject {
 
         Engine.startCoRoutine(this.playMusic(gameObjects));
 
-        //make player objects here for drawing lives
-
         this.setDrawObject({
-            "main": {
-                "drawPoints": [
-                    new Vector(0, 0),
-                ],
-                "fillColour": "#000000",
-                "strokeColour": "#000000",
+            "life_1": {
+                "drawPoints": this.adjustObjectPosition(new Vector(Engine.getWindowWidth() * 0.05804, -(Engine.getWindowHeight() * 0.03001))),
+                "x_scale": 0.05804,
+                "y_scale": 0.03001,
+                "fillColour": "#ffffff",
+                "strokeColour": "#ffffff",
+            },
+            "life_2": {
+                "drawPoints": this.adjustObjectPosition(new Vector(Engine.getWindowWidth() * 0.10026, -(Engine.getWindowHeight() * 0.03001))),
+                "x_scale": 0.10026,
+                "y_scale": 0.03001,
+                "fillColour": "#ffffff",
+                "strokeColour": "#ffffff",
+            },
+            "life_3": {
+                "drawPoints": this.adjustObjectPosition(new Vector(Engine.getWindowWidth() * 0.14248, -(Engine.getWindowHeight() * 0.03001))),
+                "x_scale": 0.14248,
+                "y_scale": 0.03001,
+                "fillColour": "#ffffff",
+                "strokeColour": "#ffffff",
             }
         })
+    }
+
+    resetPositionForScaleChange() {
+        Object.values(this.drawObject).forEach(drawable => {
+            drawable.drawPoints = playerStructure.drawPoints;
+            drawable.drawPoints = this.adjustObjectPosition(new Vector(
+                Engine.getWindowWidth() * drawable.x_scale,
+                -(Engine.getWindowHeight() * drawable.y_scale)))
+        })
+    }
+
+    adjustObjectPosition(translateVector) {
+        let vectors = [];
+
+        playerStructure.drawPoints.forEach(vector => vectors.push(Vector.translate(vector, translateVector)))
+
+        return vectors;
+    }
+
+    draw() {
+        this.drawByLine();
+
+        this.setDrawModes("", "#ffffff");
+        Engine.context.font = "28px Gill Sans MT";
+
+        Engine.context.fillText("Lives: ", Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.99);
+        Engine.context.fillText(`Score: ${this.score}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.05);
     }
 
     *playMusic(gameObjects) {

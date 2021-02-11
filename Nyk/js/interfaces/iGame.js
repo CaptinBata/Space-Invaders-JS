@@ -1,5 +1,6 @@
 class IGame {
     gameObjects = [];
+    score = 0;
     constructor() {
     }
 
@@ -13,8 +14,11 @@ class IGame {
     checkDelete() {
         this.gameObjects.forEach(gameObject => {
             gameObject.checkDelete(this.gameObjects);
-            if (gameObject.toDelete)
+            if (gameObject.toDelete) {
+                if (gameObject instanceof Alien)
+                    this.score += gameObject.pointValue;
                 Utilities.removeElement(this.gameObjects, gameObject);
+            }
         })
     }
 

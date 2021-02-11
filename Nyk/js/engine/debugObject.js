@@ -83,11 +83,11 @@ class DebugObject extends GameObject {
         this.lastTime = timestamp
     }
 
-    draw(windowWidth, windowHeight) {
+    draw() {
         this.drawByLine();
 
         Engine.context.font = "14px Gill Sans MT";
-        Engine.context.fillText(`FPS: ${this.fps.toFixed(2)}`, windowWidth * 0.96, windowHeight * 0.99);
+        Engine.context.fillText(`FPS: ${this.fps.toFixed(2)}`, Engine.getWindowWidth() * 0.96, Engine.getWindowHeight() * 0.99);
     }
 
     drawObjectBounds(objectToDraw) {

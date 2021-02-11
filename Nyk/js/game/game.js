@@ -4,7 +4,6 @@ class Game extends IGame {
 
         this.running = true;
         this.lives = 3;
-        this.score = 0;
 
         this.setupGame();
 

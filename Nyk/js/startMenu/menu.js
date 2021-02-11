@@ -7,6 +7,7 @@ class Menu extends IGame {
 
         this.circleCentre = new Vector(playableArea.min.x + ((playableArea.max.x - playableArea.min.x) / 2),
             playableArea.min.y + ((playableArea.max.y - playableArea.min.y) / 2))
+
         this.generateCircle(200, this.circlePointCount)
 
         Engine.startCoRoutine(this.rotateCircle());
