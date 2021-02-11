@@ -44,7 +44,11 @@ class Game extends IGame {
 
     update() {
         this.gameObjects.forEach(gameObject => {
-            gameObject.update(this.gameObjects)
+            if (gameObject instanceof UI)
+                gameObject.update(this.score, this.lives, this.running)
+            else
+                gameObject.update(this.gameObjects)
+
             gameObject.checkDelete(this.gameObjects);
 
             gameObject instanceof Alien && gameObject.toDelete ? this.score += gameObject.pointValue : this.score += 0
@@ -54,10 +58,6 @@ class Game extends IGame {
     }
 
     setupShields(alienStartEndPoints, playableArea) {
-        let shieldForSpacing = new Shield(0, 0);
-        let shieldWidth = shieldForSpacing.getWidth();
-        let shieldHeight = shieldForSpacing.getHeight();
-
         let shieldSpacing = Math.round((alienStartEndPoints.endPos - alienStartEndPoints.startPos) / 3)
         let shieldXStartPoint = alienStartEndPoints.startPos
         let shieldYStartPoint = playableArea.max.y * 0.8;

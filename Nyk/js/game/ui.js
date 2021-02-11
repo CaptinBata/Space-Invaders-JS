@@ -36,6 +36,12 @@ class UI extends GameObject {
         Engine.context.fillText(`Score: ${this.score}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.05);
     }
 
+    update(score, lives, running) {
+        this.score = score;
+        this.lives = lives;
+        this.running = running;
+    }
+
     *playMusic(gameObjects) {
         let songSpeed = 0.8; //The amount of time between each note of the music in the og game
         let fastestDiff = 0.09;
