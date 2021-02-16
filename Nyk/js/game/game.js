@@ -37,6 +37,8 @@ class Game extends IGame {
             }
         }
 
+        this.gameObjects.filter(gameObject => gameObject instanceof Alien).forEach((alien, index, array) => alien.setMovementSpeed(array.length)) //Set the increase of speed for when an alien dies
+
         return { startPos: alienStartXPoint, endPos: alienEndXPoint }
     }
 
@@ -46,7 +48,7 @@ class Game extends IGame {
             gameObject.checkDelete(this.gameObjects);
         })
 
-        this.checkDelete();
+        this.checkDelete(this.gameObjects);
     }
 
     setupShields(alienStartEndPoints, playableArea) {

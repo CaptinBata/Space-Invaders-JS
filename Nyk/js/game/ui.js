@@ -1,5 +1,5 @@
 class UI extends GameObject {
-    //time between noises 0.8 seconds
+    static lives = 3;
     constructor(x, y, gameObjects, runState) {
         super(x, y);
         this.musicBeats = [
@@ -10,7 +10,6 @@ class UI extends GameObject {
         ];
 
         this.score = 0;
-        this.lives = 3;
         this.runState = runState;
 
         Engine.startCoRoutine(this.playMusic(gameObjects));
@@ -32,7 +31,7 @@ class UI extends GameObject {
         this.setDrawModes("", "#ffffff");
         Engine.context.font = "28px Gill Sans MT";
 
-        Engine.context.fillText(`Lives: ${this.lives}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.99);
+        Engine.context.fillText(`Lives: ${UI.lives}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.99);
         Engine.context.fillText(`Score: ${this.score}`, Engine.getWindowHeight() * 0.01, Engine.getWindowHeight() * 0.05);
     }
 
@@ -41,6 +40,10 @@ class UI extends GameObject {
             if (alien.toDelete)
                 this.score += alien.pointValue;
         })
+    }
+
+    setRunState(state) {
+        this.runState = state;
     }
 
     *playMusic(gameObjects) {

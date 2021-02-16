@@ -114,7 +114,6 @@ class Engine {
         })
         window.addEventListener("resize", () => {
             this.setupCanvas();
-            this.game.gameObjects.forEach(gameObject => gameObject.resetPositionForScaleChange())
         })
     }
 

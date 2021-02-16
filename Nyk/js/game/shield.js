@@ -29,10 +29,10 @@ class Shield extends GameObject {
         return shapePoints;
     }
 
-    checkCollisions(bullet) {
-        if (this.detectAABBCollision(bullet)) {
-            let bulletMinGlobal = bullet.toGlobalCoords(bullet.getMinMax().min)
-            let bulletMaxGlobal = bullet.toGlobalCoords(bullet.getMinMax().max)
+    checkCollisions(object) {
+        if (this.detectAABBCollision(object)) {
+            let bulletMinGlobal = object.toGlobalCoords(object.getMinMax().min)
+            let bulletMaxGlobal = object.toGlobalCoords(object.getMinMax().max)
 
             let overlappingPixels = this.drawObject.main.drawPoints.filter(pixel => {
                 let pixelGlobal = this.toGlobalCoords(pixel);
@@ -46,7 +46,8 @@ class Shield extends GameObject {
 
             overlappingPixels.forEach(pixel => {
                 Utilities.removeElement(this.drawObject.main.drawPoints, pixel)
-                bullet.toDelete = true;
+                if (object instanceof Bullet) //Only delete other object, if it's a bullet
+                    object.toDelete = true;
             })
         }
 
@@ -59,9 +60,18 @@ class Shield extends GameObject {
 
     update(gameObjects) {
         let player = gameObjects.filter(gameObject => gameObject instanceof Player)
+        let aliens = gameObjects.filter(gameObject => gameObject instanceof Alien)
 
         player[0].getBullets().forEach(bullet => {
             this.checkCollisions(bullet);
+        })
+
+        aliens.forEach(alien => {
+            this.checkCollisions(alien)
+
+            alien.getBullets().forEach(bullet => {
+                this.checkCollisions(bullet);
+            })
         })
     }
 
