@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <style>
+      .button {
+        background-color: #ffe213;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        opacity: 0;
+      }
+      #gameCanvas {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <meta charset="utf-8" />
+  <body>
+    <canvas
+      id="gameCanvas"
+      width="200"
+      height="100"
+      style="border: 1px solid #000000; z-index: -1"
+    >
+      Your browser does not support the canvas element.
+    </canvas>
+    <button
+      type="button"
+      id="startGame"
+      class="button"
+      style="z-index: 1"
+      onclick="startGame()"
+    >
+      Start Game!
+    </button>
+  </body>
+
+  <!-- Load engine -->
+  <script src="js/engine/utilities.js"></script>
+  <script src="js/engine/engine.js"></script>
+  <script src="js/engine/gameObject.js"></script>
+  <script src="js/engine/debugObject.js"></script>
+  <script src="js/engine/vector.js"></script>
+  <script src="js/interfaces/iGame.js"></script>
+
+  <!-- Load menu -->
+  <script src="js/startMenu/star.js"></script>
+  <script src="js/startMenu/opacityAnimationObject.js"></script>
+  <script src="js/startMenu/logo.js"></script>
+  <script src="js/startMenu/button.js"></script>
+  <script src="js/startMenu/menu.js"></script>
+
+  <!-- Load game -->
+  <script src="js/game/bullet.js"></script>
+  <script src="js/game/aliens/alien1.js"></script>
+  <script src="js/game/aliens/alien2.js"></script>
+  <script src="js/game/aliens/alien3.js"></script>
+  <script src="js/game/bulletGameObject.js"></script>
+  <script src="js/game/alien.js"></script>
+  <script src="js/game/player.js"></script>
+  <script src="js/game/shield.js"></script>
+  <script src="js/game/ui.js"></script>
+  <script src="js/game/game.js"></script>
+
+  <script>
+    let engine = new Engine();
+    engine.setGame(new Menu());
+
+    engine.start();
+
+    function startGame() {
+      engine.stop();
+
+      engine.setGame(new Game());
+      engine.start();
+    }
+  </script>
+</html>
